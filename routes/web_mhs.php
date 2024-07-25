@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Mhs\DashboardController;
 
-Route::prefix('admin')->name('admin.')->group(function() {
+Route::prefix('mahasiswa')->name('mhs.')->group(function() {
 
 Route::controller(DashboardController::class)->group(function() {
     Route::get('/', 'index')->name('index');
