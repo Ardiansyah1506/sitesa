@@ -12,7 +12,7 @@ Route::middleware(['roleAccess:1'])->group(function () {
 });
 
 Route::middleware(['roleAccess:2'])->group(function () {
-    @include_once('web_progdi.php'); 
+    @include_once('web_prodi.php'); 
 });
 
 Route::middleware(['roleAccess:3'])->group(function () {
