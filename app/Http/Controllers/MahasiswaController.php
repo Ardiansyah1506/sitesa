@@ -25,9 +25,9 @@ class MahasiswaController extends Controller
         $file = $request->file('file');
 
         // Load file Excel
-        // $spreadsheet = IOFactory::load($file->getRealPath());
-        // $sheet = $spreadsheet->getActiveSheet();
-        // $rows = $sheet->toArray();
+        $spreadsheet = IOFactory::load($file->getRealPath());
+        $sheet = $spreadsheet->getActiveSheet();
+        $rows = $sheet->toArray();
 
         $errors = [];
         foreach ($rows as $key => $row) {

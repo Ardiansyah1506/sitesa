@@ -38,7 +38,7 @@ class AuthController extends Controller
                 return redirect()->route('mhs.index')->with('success', 'Berhasil login');
 
             }
-        }
+        }   
 
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
