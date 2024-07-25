@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('prodi');
             $table->string('jk');
             $table->string('alamat');
+            $table->string('email');
             $table->bigInteger('no_hp');
+            $table->string('tanggal_lahir');
             $table->string('tempat_lahir');
             $table->integer('status')->default(0);
             $table->timestamps();
