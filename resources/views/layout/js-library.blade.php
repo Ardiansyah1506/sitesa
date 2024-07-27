@@ -31,9 +31,6 @@
 <!-- Kaiadmin JS -->
 <script src="{{ url('') }}/assets/js/kaiadmin.min.js"></script>
 
-<!-- Kaiadmin DEMO methods, don't include it in your project! -->
-<script src="{{ url('') }}/assets/js/setting-demo.js"></script>
-<script src="{{ url('') }}/assets/js/demo.js"></script>
 <script>
   $(document).ready(function() {
             @if (session('success'))
@@ -42,7 +39,7 @@
                 icon: "success",
                 buttons: {
                   confirm: {
-                    text: "Confirm Me",
+                    text: "OK",
                     value: true,
                     visible: true,
                     className: "btn btn-success",
@@ -56,7 +53,7 @@
                 icon: "error",
                 buttons: {
                   confirm: {
-                    text: "Confirm Me",
+                    text: "OK",
                     value: true,
                     visible: true,
                     className: "btn btn-danger",

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   @include('layout.header')
+  
+  @yield('css-library')
+  @yield('css-custom')
   <body>
     <div class="wrapper">
       <!-- Sidebar -->
@@ -14,7 +17,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="#" class="logo">
                 <img
-                  src="assets/img/kaiadmin/logo_light.svg"
+                  src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -49,6 +52,9 @@
       </div>
 
     </div>
+    <script>
+      let baseUrl = '{{ url('') }}/'
+    </script>
     @include('layout.js-library')
     @yield('js-library')
     @yield('js-custom')

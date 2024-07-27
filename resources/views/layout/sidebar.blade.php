@@ -2,9 +2,9 @@
     <div class="sidebar-logo">
       <!-- Logo Header -->
       <div class="logo-header" data-background-color="dark">
-        <a href="index.html" class="logo">
+        <a href="#" class="logo">
           <img
-            src="assets/img/kaiadmin/logo_light.svg"
+            src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
             alt="navbar brand"
             class="navbar-brand"
             height="20"
@@ -36,7 +36,6 @@
             @elseif (auth()->user()->role == 4)
               @include('layout.sidebar.sidebar-mhs')
             @endif
-          
         </ul>
       </div>
     </div>

@@ -7,12 +7,13 @@
     />
     <link
       rel="icon"
-      href="assets/img/kaiadmin/favicon.ico"
+      href="{{ url('') }}/assets/img/kaiadmin/favicon.ico"
       type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
     <script src="{{ url('') }}/assets/js/plugin/webfont/webfont.min.js"></script>
+  
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -23,7 +24,7 @@
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["{{ url('') }}/assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -36,6 +37,4 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/kaiadmin.min.css" />
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="{{ url('') }}/assets/css/demo.css" />
   </head>
