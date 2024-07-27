@@ -30,7 +30,7 @@ class BimbinganController extends Controller
         }
         
         $data = Bimbingan::where('nip', $user->username)
-            ->where('status', 1)
+            ->where('status', 2)
             ->select(['nim', 'nama', 'status', 'ta_1', 'ta_2', 'no_hp'])
             ->get();
 

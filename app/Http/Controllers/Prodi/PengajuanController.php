@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Prodi;
 
+use App\Models\Dosbim\Tesis;
 use Illuminate\Http\Request;
 use App\Models\Dosbim\Bimbingan;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Dosbim\Tesis;
 
 class PengajuanController extends Controller
 {
@@ -26,8 +27,17 @@ class PengajuanController extends Controller
     public function getData()
     {
         
-        $data = Bimbingan::where('status', 0)
-            ->select(['id', 'nim', 'nama', 'nama_pembimbing'])
+        $data = DB::table('mhs_bimbingan_ta as bimbingan')
+            ->where('bimbingan.status', 0)
+            ->join('tesis', 'bimbingan.nim', '=', 'tesis.nim')
+            ->select([
+                'bimbingan.id',
+                'bimbingan.nim',
+                'bimbingan.nama',
+                'bimbingan.nama_pembimbing',
+                'tesis.judul',
+                'tesis.abstrak',
+            ])
             ->get();
 
         return \DataTables::of($data)
@@ -35,7 +45,7 @@ class PengajuanController extends Controller
             ->addColumn('actions', function ($data) {
                 $csrfField = csrf_field();
                 $updateMethod = method_field('PUT');
-                $accUrl = route('prodi.acc', $data->id);
+                $accUrl = route('prodi.delete-waktu-ta', $data->id);
                 return '<div class="btn-group gap-1" merk="group">
                             <form id="accBimbingan" action="' . $accUrl . '" method="POST" style="display:inline;">
                                 ' . $updateMethod . '

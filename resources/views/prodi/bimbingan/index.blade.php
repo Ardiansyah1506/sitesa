@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Pengajuan Bimbingan Mahasiswa</h4>
+          <h4 class="card-title">Mahasiswa Sedang Bimbingan</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -20,10 +20,9 @@
                 <th>No</th>
                   <th>Nim</th>
                   <th>Nama Mahasiswa</th>
+                  <th>TA 1</th>
+                  <th>TA 2</th>
                   <th>Nama Pembimbing</th>
-                  <th>Judul</th>
-                  <th>Abstrak</th>
-                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -58,26 +57,12 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nim', name: 'nim'},
                 {data: 'nama', name: 'nama'},
+                {data: 'ta_1', name: 'ta_1'},
+                {data: 'ta_2', name: 'ta_2'},
                 {data: 'nama_pembimbing', name: 'nama_pembimbing'},
-                {data: 'judul', name: 'judul'},
-                {data: 'abstrak', name: 'abstrak'},
-                {data: 'actions', name: 'actions'},
             ]
         });
     });
-
-    $(document).on('submit', '#accBimbingan', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    // JavaScript confirm dialog
-    if (confirm('Acc Pengajuan mahasiswa?')) {
-        // If user confirms, submit the form
-        $(this)[0].submit();
-    } else {
-        // If user cancels, show an alert
-        alert('Batal Acc Mahasiswa');
-    }
-});
 </script>
 
 @endsection
