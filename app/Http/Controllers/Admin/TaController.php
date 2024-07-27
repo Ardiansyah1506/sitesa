@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\TA;
 use App\Models\Tesis;
+use App\Models\TanggalTA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -86,6 +87,22 @@ class TaController extends Controller
 
             return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan pada server'], 500);
         }
+    }
+
+    public function getTanggalTa()
+    {
+        $tanggalTA = TanggalTA::first(); // Assuming there's only one record for date range
+        $tanggalAwal = $tanggalTA->tanggal_awal;
+        $tanggalAkhir = $tanggalTA->tanggal_akhir;
+        $dates = [];
+
+        $currentDate = $tanggalAwal;
+        while (strtotime($currentDate) <= strtotime($tanggalAkhir)) {
+            $dates[] = $currentDate;
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+
+        return response()->json($dates);
     }
     
     

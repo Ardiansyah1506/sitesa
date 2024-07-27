@@ -20,5 +20,6 @@ Route::prefix('admin')->name('admin.')->group(function() {
         Route::get('/ta', 'index')->name('ta.index');
         Route::get('/ta/get', 'getData')->name('ta.getdata');
         Route::post('/ta/updatestatus', 'updateStatus')->name('ta.updatestatus');
+        Route::get('/ta/gettanggal', [TaController::class, 'getTanggalTa'])->name('ta.gettanggal');
     });
 });

@@ -50,6 +50,7 @@
 
     </div>
     @include('layout.js-library')
+    @yield('js-library')
     @yield('js-custom')
   </body>
 </html>

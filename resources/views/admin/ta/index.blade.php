@@ -42,7 +42,9 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="tanggal_sidang">Tanggal Sidang</label>
-                            <input type="date" class="form-control" id="tanggal_sidang" name="tanggal_sidang" required>
+                            <select class="form-control" id="tanggal_sidang" name="tanggal_sidang" required>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
                             <input type="hidden" id="tesis_id" name="tesis_id">
                         </div>
                     </div>
@@ -102,12 +104,29 @@
                 ]
             });
 
-            // Event listener untuk tombol Acc
-            $(document).on('click', '.acc-button', function() {
-                var id = $(this).data('id');
-                $('#tesis_id').val(id);
+          // Event listener untuk tombol Acc
+    $(document).on('click', '.acc-button', function() {
+        var id = $(this).data('id');
+        $('#tesis_id').val(id);
+
+        // Mendapatkan tanggal sidang dari controller
+        $.ajax({
+            url: "{{ route('admin.ta.gettanggal') }}",
+            method: 'GET',
+            success: function(response) {
+                var options = '';
+                response.forEach(function(tanggal) {
+                    options += '<option value="' + tanggal + '">' + tanggal + '</option>';
+                });
+                $('#tanggal_sidang').html(options);
                 $('#accModal').modal('show');
-            });
+            },
+            error: function(response) {
+                var errorMessage = response.responseJSON ? response.responseJSON.message : 'An error occurred';
+                alert('Error: ' + errorMessage);
+            }
+        });
+    });
 
             // Handle form submission untuk update status
             $('#accForm').on('submit', function(e) {
