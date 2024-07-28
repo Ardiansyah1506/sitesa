@@ -90,11 +90,12 @@
                 url: "{{ route('mhs.checkPaymentStatus') }}",
                 method: 'GET',
                 success: function(response) {
-                    if(response.status == 1) {
+                    if(response.status) {
                         $('#paymentStatus').text('');
                         $('#saveChangesBtn').prop('disabled', false);
+                      checkTesis();
                     } else {
-                        $('#paymentStatus').text('Tidak Bisa menambahkan tesis Pembayaran belum terpenuhi.');
+                        $('#paymentStatus').text('Tidak Bisa menambahkan tesis. Pembayaran belum terpenuhi atau SKS kurang dari 144.');
                         $('#saveChangesBtn').prop('disabled', true);
                     }
                 },
@@ -104,36 +105,54 @@
                 }
             });
         }
+        function checkTesis() {
+            $.ajax({
+                url: "{{ route('mhs.checkTesis') }}",
+                method: 'GET',
+                success: function(response) {
+                    if(response.status) {
+                        $('#paymentStatus').text('Anda Sudah Mendaftarkan Tesis anda Silahkan Ajukan Dosen Pembimbing.');
+                        $('#saveChangesBtn').prop('disabled', true);
+                    } else {
+                        checkPaymentStatus(); // Panggil checkPaymentStatus jika tesis belum ada
+                    }
+                },
+                error: function(response) {
+                    alert('Gagal memeriksa status tesis');
+                    console.log(response);
+                }
+            });
+        }
 
         checkPaymentStatus();
+        
         // Handle form submit for adding new tesis
         $('#tesisForm').submit(function(event) {
-    event.preventDefault();
-    var formData = {
-        judul: $('#judul').val(),
-        abstrak: $('#abstrak').val(),
-        _token: '{{ csrf_token() }}',
-    };
-    $.ajax({
-        url: "{{ route('mhs.tesis.daftartesis') }}",
-        method: 'POST',
-        data: formData,
-        success: function(response) {
-            if(response.status === 'success') {
-                alert(response.message);
-                $('#tesisModal').modal('hide');
-                $('#datatable').DataTable().ajax.reload();
-            } else {
-                alert(response.message);
-            }
-        },
-        error: function(response) {
-            alert('Gagal menambahkan tesis');
-            console.log(response);
-        }
-    });
-});
-
+            event.preventDefault();
+            var formData = {
+                judul: $('#judul').val(),
+                abstrak: $('#abstrak').val(),
+                _token: '{{ csrf_token() }}',
+            };
+            $.ajax({
+                url: "{{ route('mhs.tesis.daftartesis') }}",
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    if(response.status === 'success') {
+                        alert(response.message);
+                        $('#tesisModal').modal('hide');
+                        $('#datatable').DataTable().ajax.reload();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(response) {
+                    alert('Gagal menambahkan tesis');
+                    console.log(response);
+                }
+            });
+        });
 
         // Handle plagiarism check
         $('#cekPlagiasiBtn').click(function() {

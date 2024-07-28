@@ -7,6 +7,7 @@ use App\Models\RefKuota;
 use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Exists;
@@ -17,7 +18,8 @@ class PembimbingController extends Controller
         return view('mhs.pembimbing.index');
     }
 
-    public function getDataPembimbing() {
+    public function getDataPembimbing()
+    {
         // Mengambil data pembimbing dengan join
         $data = Dosen::join('ref_kuota', 'dosen.nip', '=', 'ref_kuota.nip')
                      ->select('dosen.nama', 'dosen.nip', 'ref_kuota.sisa_kuota', 'dosen.id')
@@ -28,12 +30,12 @@ class PembimbingController extends Controller
             ->addColumn('aksi', function ($row) {
                 // Cek apakah mahasiswa sudah mengajukan bimbingan dengan dosen tersebut
                 $cekData = Bimbingan::where('nip', $row->nip)
-                                             ->where('nim', Auth::user()->username)
-                                             ->exists();
+                                     ->where('nim', Auth::user()->username)
+                                     ->exists();
                 if ($cekData) {
                     return '<span>Dalam Pengajuan</span>';
                 } else if ($row->sisa_kuota > 0) {
-                    return '<button class="btn btn-primary acc-button" data-id="' . $row->id . '">Ajukan</button>';
+                    return '<button class="btn btn-primary acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
                 } else {
                     return '<span>Kuota Sudah Penuh</span>';
                 }
@@ -42,29 +44,42 @@ class PembimbingController extends Controller
             ->make(true);
     }
 
-
-    public function PengajuanBimbingan(Request $request){
+    public function PengajuanBimbingan(Request $request)
+    {
+        Log::info('PengajuanBimbingan request received', ['request' => $request->all()]);
+    
         $nip = $request->nip;
+        Log::info('NIP received', ['nip' => $nip]);  // Debugging: Log the NIP
         $nim = Auth::user()->username;
     
         // Mengambil data mahasiswa
         $mahasiswa = Mahasiswa::where('nim', $nim)->select('nama', 'nim', 'email', 'no_hp')->first();
         if (!$mahasiswa) {
+            Log::error('Mahasiswa not found', ['nim' => $nim]);
             return response()->json(['error' => 'Mahasiswa tidak ditemukan'], 404);
         }
     
         // Mengambil data dosen
         $dosen = Dosen::where('nip', $nip)->select('nama', 'nip')->first();
         if (!$dosen) {
+            Log::error('Dosen not found', ['nip' => $nip]);
             return response()->json(['error' => 'Dosen tidak ditemukan'], 404);
         }
-    
-      
     
         // Mengambil sisa kuota
         $kuota = RefKuota::where('nip', $nip)->value('sisa_kuota');
         if ($kuota <= 0) {
+            Log::warning('Kuota penuh', ['nip' => $nip, 'sisa_kuota' => $kuota]);
             return response()->json(['error' => 'Kuota dosen sudah penuh'], 400);
+        }
+    
+        // Cek apakah mahasiswa sudah mengajukan bimbingan dengan dosen tersebut
+        $cekData = Bimbingan::where('nip', $nip)
+            ->where('nim', $nim)
+            ->exists();
+        if ($cekData) {
+            Log::warning('Pengajuan sudah ada', ['nim' => $nim, 'nip' => $nip]);
+            return response()->json(['error' => 'Anda sudah mengajukan bimbingan dengan dosen ini'], 400);
         }
     
         // Data pengajuan
@@ -86,8 +101,7 @@ class PembimbingController extends Controller
         // Kurangi kuota dosen
         RefKuota::where('nip', $nip)->decrement('sisa_kuota');
     
+        Log::info('Pengajuan bimbingan berhasil', ['nim' => $nim, 'nip' => $nip]);
         return response()->json(['success' => 'Pengajuan bimbingan berhasil'], 200);
     }
-    
-
 }

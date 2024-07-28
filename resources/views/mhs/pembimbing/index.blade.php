@@ -32,7 +32,7 @@
 <script>
     $(document).ready(function() {
         // Load table data
-         $('#datatable').DataTable({
+        $('#datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('mhs.pembimbing.getDataPembimbing') }}",
@@ -49,29 +49,30 @@
         });
 
         // Handle button click for Ajukan
-        // $(document).on('click', '.acc-button', function() {
-        //     var id = $(this).data('id');
-        //     // Implementasi aksi untuk ajukan, misalnya dengan AJAX request
-        //     $.ajax({
-        //         url: '/ajukan', // Ganti dengan URL yang sesuai
-        //         method: 'POST',
-        //         data: {
-        //             id: id,
-        //             _token: '{{ csrf_token() }}'
-        //         },
-        //         success: function(response) {
-        //             if (response.success) {
-        //                 alert('Pengajuan berhasil');
-        //                 $('#datatable').DataTable().ajax.reload();
-        //             } else {
-        //                 alert('Pengajuan gagal');
-        //             }
-        //         },
-        //         error: function(response) {
-        //             alert('Terjadi kesalahan');
-        //         }
-        //     });
-        // });
+        $(document).on('click', '.acc-button', function() {
+            var nip = $(this).data('nip');
+            console.log('NIP:', nip);  // Debugging: Log the NIP to the console
+            // Implementasi aksi untuk ajukan, misalnya dengan AJAX request
+            $.ajax({
+                url: "{{ route('mhs.pembimbing.PengajuanBimbingan') }}",
+                method: 'POST',
+                data: {
+                    nip: nip,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Pengajuan berhasil');
+                        $('#datatable').DataTable().ajax.reload();
+                    } else {
+                        alert('Pengajuan gagal: ' + response.error);
+                    }
+                },
+                error: function(response) {
+                    alert('Terjadi kesalahan');
+                }
+            });
+        });
     });
 </script>
 @endsection

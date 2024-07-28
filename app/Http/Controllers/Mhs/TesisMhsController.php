@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mhs;
 
 use App\Models\Tesis;
+use App\Models\RefSks;
 use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
@@ -95,31 +96,26 @@ class TesisMhsController extends Controller
 
     public function checkPaymentStatus() {
         $nim = Auth::user()->username;
+    
+        // Mengambil status pembayaran
         $statusPembayaran = RefPembayaran::where('nim', $nim)->value('status');
-
-        return response()->json(['status' => $statusPembayaran]);
+    
+        // Mengambil jumlah SKS
+        $jumlahSks = RefSks::where('nim', $nim)->value('jumlah');
+    
+        // Menentukan apakah kedua syarat terpenuhi
+        $isEligible = $statusPembayaran == 1 && $jumlahSks >= 144;
+    
+        return response()->json(['status' => $isEligible]);
     }
 
-    public function uploadBab1(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:pdf,doc,docx|max:2048',
-        ]);
-
+    public function checkTesis(){
         $nim = Auth::user()->username;
-        $fileName = $nim . '_bab1.' . $request->file->getClientOriginalExtension();
-        $filePath = $request->file('file')->storeAs('upload/bab_1', $fileName, 'public');
-
-        // Simpan informasi file ke database jika diperlukan
-        $bimbingan = new Bimbingan();
-        $bimbingan->nim = $nim;
-        $bimbingan->nama = Auth::user()->name;
-        $bimbingan->nama_file = $fileName;
-        $bimbingan->status = 0;
-        $bimbingan->id_kategori = 1;
-        $bimbingan->save();
-
-        return back()->with('success', 'File berhasil diupload')->with('file', $fileName);
+        $tesisExists = Tesis::where('nim', $nim)->exists(); // Periksa tabel tesis
+        return response()->json(['status' => $tesisExists]);
     }
+    
+
+  
 
 }
