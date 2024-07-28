@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Dosbim;
 
-<<<<<<< HEAD
-use App\Models\Bimbingan;
-=======
-use App\Http\Controllers\Controller;
 use App\Models\Bab;
+use App\Models\Tesis;
 use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
-use App\Models\Tesis;
->>>>>>> c27ec82868bf77845011b106f6ccc937d33fa5e2
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
