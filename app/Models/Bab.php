@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models\Dosbim;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tesis extends Model
+class Bab extends Model
 {
     use HasFactory;
 
-    protected $table = 'tesis';
+    protected $table  = 'ref_bab';
     protected $guarded = ['id'];
+    
 }

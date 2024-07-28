@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dosbim;
 
-use App\Http\Controllers\Controller;
-use App\Models\Dosbim\Bimbingan;
+use App\Models\Bimbingan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BimbinganController extends Controller
 {
