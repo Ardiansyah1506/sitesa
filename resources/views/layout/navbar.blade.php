@@ -42,32 +42,19 @@
           >
             <div class="avatar-sm">
               <img
-                src="{{ asset('assets/img/profile.jpg') }}"
+                src="{{ asset('assets/img/flags/id.png') }}"
                 alt="..."
                 class="avatar-img rounded-circle"
               />
             </div>
             <span class="profile-username">
-              <span class="op-7">Hi,</span>
-              <span class="fw-bold">Hizrian</span>
+              <span class="fw-bold">{{ auth()->user()->username }}</span>
             </span>
           </a>
           <ul class="dropdown-menu dropdown-user animated fadeIn">
             <div class="dropdown-user-scroll scrollbar-outer">
               <li>
-                <div class="user-box">
-                  <div class="avatar-lg">
-                    <img
-                      src="{{ asset('assets/img/profile.jpg') }}"
-                      alt="image profile"
-                      class="avatar-img rounded"
-                    />
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"><i class="icon-power mr-4"></i> Logout</a>
               </li>
             </div>
           </ul>

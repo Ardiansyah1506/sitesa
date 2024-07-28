@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Sidang TA</h4>
+          <h4 class="card-title">Kuota Pembimbing</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -17,12 +17,10 @@
             >
               <thead>
                 <tr>
-                <th>No</th>
-                  <th>Nama</th>
-                  <th>Gelombang</th>
-                  <th>Tanggal Awal</th>
-                  <th>Tanggal Akhir</th>
-                  <th>Status</th>
+                  <th>No</th>
+                  <th>Nip</th>
+                  <th>Nama Pembimbing</th>
+                  <th>Sisa Kuota</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -34,7 +32,7 @@
       </div>
     </div>
   </div>
-  @include('prodi.waktu-ta.modal')
+  @include('prodi.kuota.modal')
 @endsection
 
 {{-- tempat js custom --}}
@@ -57,60 +55,39 @@
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
-                {data: 'gelombang', name: 'gelombang'},
-                {data: 'tanggal_awal', name: 'tanggal_awal'},
-                {data: 'tanggal_akhir', name: 'tanggal_akhir'},
-                {data: 'status', name: 'status'},
+                {data: 'sisa_kuota', name: 'sisa_kuota'},
                 {data: 'actions', name: 'actions'},
             ]
         });
-    });
 
-    $("#dataTables1").on("click", ".edit-ta", function() {
-                $("#modalEditTA").modal("show")
+        $("#dataTables1").on("click", ".edit-kuota", function() {
+                $("#modalEditKuota").modal("show")
                 let dataId = $(this).data("id")
                 $.ajax({
                     url: baseUrl + '{{ $url }}' + 'edit/' + dataId,
                     type: "GET",
                     dataType: "JSON",
                     success: (result) => {
-                        console.log(result.data.tanggal_awal);
                         if (result.status == true) {
-                            $("#id-edit-ta").val(result.data.id)
-                            $("#nama").val(result.data.nama)
-                            $("#gelombang").val(result.data.gelombang)
-                            $("#tanggal-mulai").val(result.data.tanggal_awal)
-                            $("#tanggal-akhir").val(result.data.tanggal_akhir)
+                          $("#id-edit-kouta").val(result.data.nip)
+                          $("#nama").val(result.data.nama)
+                          $("#sisa-kuota").val(result.data.sisa_kuota)
                         } else {
-                            $("#modalEditTA").modal("hide")
+                            $("#modalEditKuota").modal("hide")
                             alert("Data Not Found")
                         }
                     },
                     error: (err) => {
                         alert("Data Not Found")
-                        $("#modalEditTA").modal("hide")
+                        $("#modalEditKuota").modal("hide")
                         console.log(err)
                         console.log(err.responseJSON)
                     }
                 })
             });
-
-    $(document).on('submit', '#delete-ta', function(event) {
-    event.preventDefault(); // Mencegah submit form langsung
-
-    // Menampilkan dialog konfirmasi menggunakan confirm
-    var confirmDelete = confirm('Anda tidak dapat mengembalikan data yang telah dihapus! Apakah Anda yakin?');
-
-    if (confirmDelete) {
-        // Jika user mengklik "OK", kirimkan form
-        $(this)[0].submit(); // Menggunakan [0] untuk merujuk ke elemen DOM form
-    } else {
-        // Jika user mengklik "Cancel", tampilkan informasi
-        alert('Data tidak dihapus');
-    }
-});
-
+    });
 
 </script>
 

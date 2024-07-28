@@ -24,6 +24,7 @@
                   <th>TA 1</th>
                   <th>TA 2</th>
                   <th>No Hp</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,6 +63,7 @@
                 {data: 'ta_1', name: 'ta_1'},
                 {data: 'ta_2', name: 'ta_2'},
                 {data: 'no_hp', name: 'no_hp'},
+                {data: 'actions', name: 'actions'}
             ]
         });
     });

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Dosbim;
 
-use App\Models\Dosbim\Tesis;
 use Illuminate\Http\Request;
-use App\Models\Dosbim\Bimbingan;
+use App\Models\Bimbingan;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
