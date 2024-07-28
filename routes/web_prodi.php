@@ -16,7 +16,9 @@ Route::controller(DashboardController::class)->group(function() {
 Route::controller(PengajuanController::class)->group(function() {
     Route::get('/pengajuan', 'index')->name('pengajuan');
     Route::get('/pengajuan/get-data', 'getData')->name('get-data');
+    Route::get('/pengajuan/get-data-detail/{id?}', 'getDataDetail')->name('get-data-detail');
     Route::put('/pengajuan/acc/{id?}', 'acc')->name('acc');
+    Route::get('/pengajuan/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
 });
 
 Route::controller(BimbinganController::class)->group(function() {

@@ -225,21 +225,53 @@ class BimbinganController extends Controller
         return back()->with('success', 'Berhasil memberi catatan bab 1');
     }   
 
-    public function accBab(Request $request){
+    public function accBab(Request $request) {
+        $nip = auth()->user()->username;
+    
         $refBab = Bab::where('nim', $request->nim)
-        ->where('id_kategori', $request->babKe)
-        ->first();
-
+            ->where('id_kategori', $request->babKe)
+            ->first();
+    
         $bimbingan = Bimbingan::where('nim', $request->nim)
-        ->where('nip', auth()->user()->username)
-        ->first();
-
-        $bimbingan->update(['catatan' => null]);
-
-        $refBab->update(['status' => 1]);
-
-        return back()->with('success', 'Acc Bab ke-'. $request->babKe);
+            ->where('nip', $nip)
+            ->first();
+        
+        if($request->babKe == 3 || $request->babKe == 6)
+        {
+            // Mengambil semua entri bimbingan dengan status 1
+            $statuses = Bimbingan::where('nim', $request->nim)
+                ->where('status', 1)
+                ->pluck('ta_1');
+    
+            // Logika yang telah diperbaiki untuk perulangan dengan kondisi bab ke-3 dan ke-6
+            foreach($statuses as $status) {
+                if ($request->babKe == 3) {
+                    Bimbingan::where('nim', $request->nim)
+                        ->where('nip', $nip)
+                        ->update([
+                            'ta_1' => 2
+                        ]);
+                } elseif ($request->babKe == 6) {
+                    Bimbingan::where('nim', $request->nim)
+                        ->where('nip', $nip)
+                        ->update([
+                            'ta_2' => 2
+                        ]);
+                }
+            }
+        }
+    
+        // Memastikan bimbingan dan refBab tidak null sebelum update
+        if ($bimbingan) {
+            $bimbingan->update(['catatan' => null]);
+        }
+    
+        if ($refBab) {
+            $refBab->update(['status' => 1]);
+        }
+    
+        return back()->with('success', 'Acc Bab ke-' . $request->babKe);
     }
-
+    
+                
 }
-

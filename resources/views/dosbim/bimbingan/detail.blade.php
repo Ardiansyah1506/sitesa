@@ -7,7 +7,7 @@
             <h4 class="card-title">Detail Bimbingan | {{ $nama }}</h4>
         </div>
         <div class="card-body">
-            <h3 class="fw-bold mb-3">Judul : {{ $tesis->judul }}</h3>
+            <h3 class="fw-bold mb-3 py-4">Judul : {{ $tesis->judul }}</h3>
             <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
                 @foreach (range(1, 6) as $i)
                     @php
@@ -85,6 +85,18 @@
         @foreach (range(1, 6) as $i)
             $('#btn-revisi-bab-{{ $i }}').on('click', function(){
                 $('.formBab{{ $i }}').toggle(); // Use class selector and toggle() to show/hide
+            });
+            $('#acc-bab-{{ $i }}').on('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // JavaScript confirm dialog
+                if (confirm('Acc Pengajuan mahasiswa Bab ke {{ $i }}?')) {
+                    // If user confirms, submit the form
+                    $(this)[0].submit();
+                } else {
+                    // If user cancels, show an alert
+                    alert('Batal Acc Mahasiswa');
+                }
             });
         @endforeach
     });

@@ -17,12 +17,9 @@
             >
               <thead>
                 <tr>
-                <th>No</th>
-                  <th>Nim</th>
-                  <th>Nama Mahasiswa</th>
-                  <th>Nama Pembimbing</th>
-                  <th>Judul</th>
-                  <th>Abstrak</th>
+                  <th>No</th>
+                  <th>Nip</th>
+                  <th>Nama Dosen</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -56,28 +53,22 @@
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'nim', name: 'nim'},
+                {data: 'nip', name: 'nip'},
                 {data: 'nama', name: 'nama'},
-                {data: 'nama_pembimbing', name: 'nama_pembimbing'},
-                {data: 'judul', name: 'judul'},
-                {data: 'abstrak', name: 'abstrak'},
                 {data: 'actions', name: 'actions'},
             ]
         });
     });
 
     $(document).on('submit', '#accBimbingan', function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); 
 
-    // JavaScript confirm dialog
     if (confirm('Acc Pengajuan mahasiswa?')) {
-        // If user confirms, submit the form
         $(this)[0].submit();
     } else {
-        // If user cancels, show an alert
         alert('Batal Acc Mahasiswa');
     }
-});
+  });
 </script>
 
 @endsection
