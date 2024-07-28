@@ -5,7 +5,7 @@
     </a>
   </li>
 
-  <li class="nav-item @if ($active == "pengajuan-prodi") active @endif">
+  <li class="nav-item @if ($active == "pengajuan-prodi" || $active == "bimbingan-langsung") active @endif">
     <a data-bs-toggle="collapse" href="#bimbingan">
       <i class="icon-people"></i>
       <p>Bimbingan</p>

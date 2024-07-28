@@ -7,7 +7,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Waktu TA</h4>
+          <h4 class="card-title">Sidang TA</h4>
         </div>
         <div class="card-body">
           <div class="table-responsive">

@@ -20,7 +20,7 @@
                   <th>No</th>
                   <th>Nip</th>
                   <th>Nama Pembimbing</th>
-                  <th>Kuota</th>
+                  <th>Sisa Kuota</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
