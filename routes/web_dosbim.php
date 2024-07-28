@@ -14,6 +14,7 @@ Route::prefix('dosen-pembimbing')->name('dosbim.')->group(function() {
     Route::controller(BimbinganController::class)->group(function() {
         Route::get('/bimbingan', 'index')->name('bimbingan');
         Route::get('/bimbingan/get-data', 'getData')->name('get-data');
+        Route::get('/bimbingan/detail/{id}', 'detail')->name('detail-bimbingan');
     });
 
     Route::controller(PengajuanController::class)->group(function() {

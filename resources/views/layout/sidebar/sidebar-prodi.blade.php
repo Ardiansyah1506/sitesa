@@ -1,5 +1,5 @@
 <li class="nav-item @if ($active == "dashboard") active @endif">
-    <a href="#">
+    <a href="{{ route('prodi.index') }}">
       <i class="fas fa-home"></i>
       <p>Dashboard</p>
     </a>
@@ -31,5 +31,12 @@
     <a href="{{ route('prodi.waktu-ta') }}">
       <i class="icon-hourglass"></i>
       <p>Masa TA</p>
+    </a>
+  </li>
+
+  <li class="nav-item @if ($active == "kuota-pembimbing") active @endif">
+    <a href="{{ route('prodi.kuota-pembimbing') }}">
+      <i class="icon-user-following"></i>
+      <p>Kuota Pembimbing</p>
     </a>
   </li>

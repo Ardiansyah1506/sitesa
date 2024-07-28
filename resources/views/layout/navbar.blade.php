@@ -67,7 +67,7 @@
               </li>
               <li>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"><i class="icon-power mr-4"></i> Logout</a>
               </li>
             </div>
           </ul>

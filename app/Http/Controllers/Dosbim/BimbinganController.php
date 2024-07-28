@@ -41,7 +41,9 @@ class BimbinganController extends Controller
                     case 0:
                         return 'Pengajuan';
                     case 1:
-                        return 'Bimbingan';
+                        return '<span class="badge rounded-pill bg-success">Lulus</span>';
+                    case 2:
+                        return '<span class="badge rounded-pill bg-info">Bimbingan</span>';
                     default:
                         return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
                 }
@@ -49,7 +51,7 @@ class BimbinganController extends Controller
             ->editColumn('ta_1', function ($row) {
                 switch($row->ta_1){
                     case 0:
-                        return 'Revisi';
+                        return '<span class="badge badge-warning">Revisi</span>';
                     case 1:
                         return 'Lulus';
                     default:
@@ -59,14 +61,24 @@ class BimbinganController extends Controller
             ->editColumn('ta_2', function ($row) {
                 switch($row->ta_2){
                     case 0:
-                        return 'Revisi';
+                        return '<span class="badge badge-warning">Revisi</span>';
                     case 1:
                         return 'Lulus';
                     default:
                         return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
                 }
             })
+            ->addColumn('actions', function ($data) {
+                return '<div class="btn-group gap-1" merk="group">
+                            <a type="button" href="' . route('dosbim.detail-bimbingan', $data->nim) . '" class="btn btn-sm btn-primary rounded">Detail</a>
+                        </div>';
+            })
+            ->rawColumns(['ta_1', 'ta_2', 'status', 'actions'])
             ->make(true);
+    }
+    
+    public function detail($id = NULL){
+        dd($id);
     }
 
 }
