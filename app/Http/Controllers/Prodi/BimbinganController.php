@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Prodi;
 
 use Illuminate\Http\Request;
-use App\Models\Dosbim\Bimbingan;
+use App\Models\Bimbingan;
 use App\Http\Controllers\Controller;
 
 class BimbinganController extends Controller

@@ -54,18 +54,6 @@
           <ul class="dropdown-menu dropdown-user animated fadeIn">
             <div class="dropdown-user-scroll scrollbar-outer">
               <li>
-                <div class="user-box">
-                  <div class="avatar-lg">
-                    <img
-                      src="{{ asset('assets/img/profile.jpg') }}"
-                      alt="image profile"
-                      class="avatar-img rounded"
-                    />
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}"><i class="icon-power mr-4"></i> Logout</a>
               </li>
             </div>

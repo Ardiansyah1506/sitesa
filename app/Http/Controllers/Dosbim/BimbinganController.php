@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Dosbim;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bab;
-use App\Models\Dosbim\Bimbingan;
+use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
+use App\Models\Tesis;
 use Illuminate\Http\Request;
 
 class BimbinganController extends Controller
@@ -87,11 +88,15 @@ class BimbinganController extends Controller
         $mhs = Mahasiswa::where('nim', $nim)
         ->first();
 
+        $tesis = Tesis::where('nim', $nim)
+        ->first();
+
         $data = [
             'url' => $this->url,
             'title' => $this->title,
             'active' => $this->active,
             'nim' => $nim,
+            'tesis' => $tesis,
             'nama' => $mhs->nama,
             'bab1' => $babList->get(1),
             'bab2' => $babList->get(2),
@@ -107,6 +112,7 @@ class BimbinganController extends Controller
 
     public function storeCatatanBab1(Request $request){
         $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
         ->where('id_kategori', 1)
         ->where('status', 0)
         ->first();
@@ -117,7 +123,104 @@ class BimbinganController extends Controller
         ->where('nip', auth()->user()->username)
         ->first();
 
-        $catatan->update(['catatan' => $request->catatan]);
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
+
+        return back()->with('success', 'Berhasil memberi catatan bab 1');
+    }   
+    public function storeCatatanBab2(Request $request){
+        $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->where('id_kategori', 2)
+        ->where('status', 0)
+        ->first();
+
+        $refBab->update(['status' => 2]);
+
+        $catatan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
+
+        return back()->with('success', 'Berhasil memberi catatan bab 1');
+    }   
+    public function storeCatatanBab3(Request $request){
+        $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->where('id_kategori', 3)
+        ->where('status', 0)
+        ->first();
+
+        $refBab->update(['status' => 2]);
+
+        $catatan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
+
+        return back()->with('success', 'Berhasil memberi catatan bab 1');
+    }   
+    public function storeCatatanBab4(Request $request){
+        $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->where('id_kategori', 4)
+        ->where('status', 0)
+        ->first();
+
+        $refBab->update(['status' => 2]);
+
+        $catatan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
+
+        return back()->with('success', 'Berhasil memberi catatan bab 1');
+    }   
+    public function storeCatatanBab5(Request $request){
+        $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->where('id_kategori', 5)
+        ->where('status', 0)
+        ->first();
+
+        $refBab->update(['status' => 2]);
+
+        $catatan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
+
+        return back()->with('success', 'Berhasil memberi catatan bab 1');
+    }   
+    public function storeCatatanBab6(Request $request){
+        $refBab = Bab::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->where('id_kategori', 1)
+        ->where('status', 0)
+        ->first();
+
+        $refBab->update(['status' => 2]);
+
+        $catatan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $catatan->update([
+            'catatan' => $request->catatan
+        ]);
 
         return back()->with('success', 'Berhasil memberi catatan bab 1');
     }   
@@ -126,6 +229,12 @@ class BimbinganController extends Controller
         $refBab = Bab::where('nim', $request->nim)
         ->where('id_kategori', $request->babKe)
         ->first();
+
+        $bimbingan = Bimbingan::where('nim', $request->nim)
+        ->where('nip', auth()->user()->username)
+        ->first();
+
+        $bimbingan->update(['catatan' => null]);
 
         $refBab->update(['status' => 1]);
 
