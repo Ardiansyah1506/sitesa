@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+  Deploy:
+    name: Deploy via SFTP
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -16,21 +16,22 @@ jobs:
     - name: Install PHP and Composer
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.2' # Adjust to match the PHP version used by your Laravel project
+        php-version: '8.2'
         tools: composer
 
     - name: Install PHP dependencies
       run: composer install --no-dev --optimize-autoloader
 
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+    - name: Deploy to server via SFTP
+      uses: appleboy/sftp-action@v1.2.0
       with:
-        server: ${{ secrets.SERVER }}
+        host: ${{ secrets.SERVER }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        local-dir: ./ # The local directory to upload
-        server-dir: ${{ secrets.SERVER_PATH }} # The server directory to upload to
+        port: 22 # Default port for SFTP
+        local-dir: ./ # Local directory to upload
+        remote-dir: ${{ secrets.SERVER_PATH }} # Remote directory to upload to
 
     - name: Set correct permissions
       run: |
-        ssh ${{ secrets.USERNAME }}@${{ secrets.SERVER }} 'chmod -R 755 ${{ secrets.SERVER_PATH }}/storage ${{ secrets.SERVER_PATH }}/bootstrap/cache'
+        ssh ${{ secrets.USERNAME }}@${{ secrets.SERVER }} 'chmod -R 755 ${{ secrets.SERVER_PATH }}/storage ${{ secrets.SFTP_SERVER_PATH }}/bootstrap/cache'
