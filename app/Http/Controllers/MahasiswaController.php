@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dosen;
 use App\Models\Prodi;
 use App\Models\RefSks;
 use App\Models\Mahasiswa;
@@ -61,36 +62,25 @@ class MahasiswaController extends Controller
 
                 // Buat array data untuk validasi dan pengisian otomatis
                 $data = [
-                    'nim' => $row[1],
-                    'jumlah' => '144', // Mengisi status dengan nilai default 0
+                    'kode_prodi' => '-',
+                    'nidn' => $row[0]??'-',
+                    'nip' =>  $row[1]??'-', // Ganti nilai prodi dengan nama prodi yang sesuai atau fallback ke nilai asli
+                    'nama' =>  $row[2]??'-', // Mengisi jenis kelamin dengan nilai default 'L'
+                    'jk' =>  $row[3]??'-',
+                    'email' => $row[4]?? 'dummy@email.com',
+                    'no_hp' =>  $row[5]??000,
+                    'alamat' => $row[6]??'-',
+                    'tempat_lahir' =>  $row[7]??'-', // Mengisi tempat lahir dengan 'Semarang'
+                    'tanggal_lahir' => $row[8]??'1956-12-24',
+                    'status' => 0, // Mengisi status dengan nilai default 0
                 ];
 
-                // Buat validator untuk data
-                $validator = Validator::make($data, [
-                    'nim' => 'required|string|max:255',
-                ]);
-
-                if ($validator->fails()) {
-                    // Jika validasi gagal, tambahkan pesan kesalahan
-                    $errors[] = $validator->errors()->all();
-                    Log::warning("Validasi gagal untuk NIM {$row[1]}", $validator->errors()->all());
-                    continue;
-                }
-
+              
                 // Buat data mahasiswa baru jika validasi berhasil
-                RefSks::create($data);
+                Dosen::create($data);
 
                 // Buat entri baru di tabel ref_sks
-                // RefSks::create([
-                //     'nim' => $data['nim'],
-                //     'jumlah' => 144 // Misalkan jumlah SKS default adalah 144
-                // ]);
-
-                // // Buat entri baru di tabel ref_pembayaran
-                // RefPembayaran::create([
-                //     'nim' => $data['nim'],
-                //     'status' => 1 // Misalkan status pembayaran default adalah 1 (terpenuhi)
-                // ]);
+               
             }
 
             if (!empty($errors)) {
