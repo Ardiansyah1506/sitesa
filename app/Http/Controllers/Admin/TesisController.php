@@ -24,6 +24,17 @@ class TesisController extends Controller
         // Mengelola data dengan DataTables
         return \DataTables::of($data)
             ->addIndexColumn() // Menambahkan index kolom
+            ->editColumn('status', function ($row) {
+                switch ($row->status) {
+                    case 0:
+                        return '<span class="badge rounded-pill bg-info">proses</span>';
+                    case 1:
+                        return '<span class="badge rounded-pill bg-success">diterima</span>';
+                    default:
+                        return '';
+                }
+            })
+            ->rawColumns(['status'])
             ->make(true);
     }
     

@@ -4,6 +4,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
+            <div class="p-4">
+                <h2>Tesis</h2>
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered dt-responsive" id="datatable">
@@ -16,7 +19,6 @@
                                 <th>Translate</th>
                                 <th>Abstrak</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,7 +66,7 @@
       var table = $('#datatable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('admin.ta.getdata') }}",
+          ajax: "{{ route('admin.tesis.getdata') }}",
           columns: [
               {data: 'DT_RowIndex', name: 'DT_RowIndex'},
               {data: 'nama', name: 'nama'},
@@ -73,7 +75,6 @@
               {data: 'translate', name: 'translate'},
               {data: 'abstrak', name: 'abstrak'},
               {data: 'status', name: 'status', orderable: false, searchable: false},
-              {data: 'aksi', name: 'aksi', orderable: false, searchable: false}
           ]
       });
 
@@ -86,48 +87,34 @@
           $('#accModal').modal('show');
       });
 
-      // Event listener untuk tombol Selesai
-      $(document).on('click', '.selesai-button', function() {
-          var id = $(this).data('id');
-          var tesis_id = $(this).data('tesis-id');
-          $('#ta_id').val(id);
-          $('#tesis_id').val(tesis_id);
-          $('#action').val('selesai');
-          $('#accModal').modal('show');
-      });
 
-      // Handle form submission untuk update status
       $('#accForm').on('submit', function(e) {
-          e.preventDefault();
-          var id = $('#ta_id').val();
-          var tanggal_sidang = $('#tanggal_sidang').val();
-          var action = $('#action').val();
-          var tesis_id = $('#tesis_id').val();
+                e.preventDefault();
+                var id = $('#tesis_id').val();
+                var tanggal_sidang = $('#tanggal_sidang').val();
 
-          $.ajax({
-              url: "{{ route('admin.ta.updatestatus') }}",
-              method: 'POST',
-              data: {
-                  _token: '{{ csrf_token() }}',
-                  id: id,
-                  tanggal_sidang: tanggal_sidang,
-                  action: action,
-                  tesis_id: tesis_id
-              },
-              success: function(response) {
-                  if (response.status === 'success') {
-                      $('#accModal').modal('hide');
-                      table.ajax.reload();
-                      alert(response.message);
-                  } else {
-                      alert(response.message);
-                  }
-              },
-              error: function(xhr, status, error) {
-                  alert('Terjadi kesalahan. Silakan coba lagi.');
-              }
-          });
-      });
+                $.ajax({
+                    url: "{{ route('admin.ta.updatestatus') }}",
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: id,
+                        tanggal_sidang: tanggal_sidang
+                    },
+                    success: function(response) {
+                        $('#accModal').modal('hide');
+                        table.ajax.reload();
+                        alert(response.message);
+                    },
+                    error: function(response) {
+                        var errorMessage = response.responseJSON ? response.responseJSON
+                            .message : 'An error occurred';
+                        alert('Error: ' + errorMessage);
+                    }
+                });
+
+            });
+
     });
 </script>
 @endsection

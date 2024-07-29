@@ -35,7 +35,7 @@ class KuotaPembimbingController extends Controller
             ->addIndexColumn()
             ->addColumn('actions', function ($data) {
                 return '<div class="btn-group gap-1" merk="group">
-                            <button type="button" class="btn btn-sm btn-primary rounded edit-kuota" data-id="' . $data->nip . '">Ubah</button>
+                            <button type="button" class="btn btn-sm btn-primary rounded edit-mhs" data-id="' . $data->nip . '">Ubah</button>
                         </div>';
             })
             ->rawColumns(['actions'])

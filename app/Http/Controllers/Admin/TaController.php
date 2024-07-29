@@ -8,6 +8,9 @@ use App\Models\TanggalTA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+Carbon::setLocale('id');
+
 
 class TaController extends Controller
 {
@@ -36,6 +39,9 @@ class TaController extends Controller
                 'abstrak' => $tesis ? $tesis->abstrak : null,
                 'status' => $ta->status,
                 'ta_id' => $ta->id, // Menyimpan ID TA untuk keperluan aksi
+                'nama_file' => $ta->nama_file, 
+                'kode_ta' => $ta->kode_ta, 
+                'tanggal' => $ta->tanggal,
                 'tesis_id' => $tesis ? $tesis->id : null,
             ];
         });
@@ -53,15 +59,36 @@ class TaController extends Controller
                         return '';
                 }
             })
+            ->editColumn('kode_ta', function ($row) {
+                switch ($row['kode_ta']) {
+                    case 1:
+                        return '<span class="badge rounded-pill bg-info">TA 1</span>';
+                    case 2:
+                        return '<span class="badge rounded-pill bg-info">TA 2</span>';
+                    default:
+                        return '';
+                }
+            })
+            ->editColumn('tanggal', function ($row) {
+                if (empty($row['tanggal'])) {
+                    return '<span class="badge rounded-pill bg-warning">belum di set</span>';
+                } else {
+                    return '<span class="badge rounded-pill bg-primary">' . Carbon::parse($row['tanggal'])->translatedFormat('d F Y') . '</span>';
+                }
+            })
+            ->editColumn('nama_file', function ($row) {
+                    $url = url('') . '/ta/' . $row['nama_file'];
+                    return '<a href="' . $url . '" class="btn btn-sm border shadow-sm">Lihat</a>';
+            })
             ->addColumn('aksi', function ($row) {
                 if ($row['status'] == 0) {
-                    return '<button class="btn btn-primary acc-button" data-id="' . $row['ta_id'] . '">Acc</button>';
-                } else if ($row['status'] == 1) {
-                    return '<button class="btn btn-primary selesai-button" data-id="' . $row['ta_id'] . '" data-tesis-id="' . $row['tesis_id'] . '">Selesai</button>';
+                    return '<button class="btn btn-success acc-button" data-id="' . $row['ta_id'] . '">Acc</button>';
+                } else if ($row['status'] == 2) {
+                    return '<button class="btn btn-info selesai-button" data-id="' . $row['ta_id'] . '" data-tesis-id="' . $row['tesis_id'] . '">Selesai</button>';
                 }
                 return '';
             })
-            ->rawColumns(['status', 'aksi'])
+            ->rawColumns(['status', 'aksi', 'kode_ta', 'nama_file', 'tanggal'])
             ->make(true);
 
     }
@@ -82,6 +109,33 @@ class TaController extends Controller
                 return response()->json(['status' => 'success', 'message' => 'Status TA berhasil diperbarui dan tanggal sidang ditambahkan', 'data' => $ta]);
             }
             return response()->json(['status' => 'error', 'message' => 'Data Tesis Tidak Ditemukan'], 404);
+        } catch (\Exception $e) {
+            // Log the exception with more details
+            Log::error('Error updating status: ', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan pada server'], 500);
+        }
+    }
+
+    public function updateSelesaiTA(Request $request)
+    {
+        Log::info('Request data:', $request->all());
+
+        try {
+            // Find the TA by ID
+            $ta = TA::find($request->id);
+            if ($ta) {
+                $ta->status = 1;
+                $ta->save(); // Gunakan save() untuk menyimpan perubahan pada model
+
+                return response()->json(['status' => 'success', 'message' => 'Berhasil melakukan penyelesaian TA', 'data' => $ta]);
+            }
+            return response()->json(['status' => 'error', 'message' => 'Data TA Tidak Ditemukan'], 404);
         } catch (\Exception $e) {
             // Log the exception with more details
             Log::error('Error updating status: ', [

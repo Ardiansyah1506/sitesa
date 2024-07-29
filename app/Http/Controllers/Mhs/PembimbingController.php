@@ -42,7 +42,7 @@ class PembimbingController extends Controller
                 if ($cekData) {
                     return '<span>Dalam Pengajuan</span>';
                 } else if ($row->sisa_kuota > 0) {
-                    return '<button class="btn btn-success acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
+                    return '<button class="btn btn-success btn-sm acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
                 } else {
                     return '<span>Kuota Sudah Penuh</span>';
                 }

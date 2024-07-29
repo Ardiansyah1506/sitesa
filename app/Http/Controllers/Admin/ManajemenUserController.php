@@ -39,7 +39,21 @@ class ManajemenUserController extends Controller
                 return '<div><button class="btn btn-warning btn-sm edit-btn text-light" data-id="'.$row->id.'">Edit</button>
                         <button class="btn btn-danger btn-sm delete-btn" data-id="'.$row->id.'">Hapus</button></div>';
             })
-            ->rawColumns(['button'])
+            ->editColumn('role', function ($row) {
+                switch ($row->role) {
+                    case 1:
+                        return '<span class="badge rounded-pill bg-success">Admin</span>';
+                    case 2:
+                        return '<span class="badge rounded-pill bg-info">Porgram Studi</span>';
+                    case 3:
+                        return '<span class="badge rounded-pill bg-warning">Dosen Pembimbing</span>';
+                    case 4:
+                        return '<span class="badge rounded-pill bg-black">Mahasiswa</span>';
+                    default:
+                        return '';
+                }
+            })
+            ->rawColumns(['button', 'role'])
             ->make(true);
     }
     
