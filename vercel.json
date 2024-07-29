@@ -2,7 +2,7 @@
     "version": 2,
     "functions": {
       "api/index.php": {
-        "runtime": "vercel-php@0.7.1"
+        "runtime": "vercel-php@0.6.0"
       }
     },
     "routes": [
@@ -11,6 +11,7 @@
         "dest": "/api/index.php"
       }
     ],
+    "public": true,
     "buildCommand": "vite build",
     "env": {
       "APP_ENV": "production",
