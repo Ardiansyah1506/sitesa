@@ -11,6 +11,7 @@
         "dest": "/api/index.php"
       }
     ],
+    "buildCommand": "vite build",
     "env": {
       "APP_ENV": "production",
       "APP_DEBUG": "true",
@@ -31,6 +32,6 @@
       "LOG_CHANNEL": "stderr",
       "SESSION_DRIVER": "cookie"
     },
-    "outputdirectory": "public"
+    "outputDirectory": "public"
   }
   
