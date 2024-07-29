@@ -7,7 +7,7 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    name: FTP-Deploy-Action
+    name: Deploy via SFTP
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -22,15 +22,11 @@ jobs:
     - name: Install PHP dependencies
       run: composer install --no-dev --optimize-autoloader
 
-    - name: FTP-Deploy-Action
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+    - name: Deploy to server via SFTP
+      uses: appleboy/ftp-action@v1.1.0
       with:
-        server: ${{ secrets.SERVER }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        host: ${{ secrets.SFTP_SERVER }}
+        username: ${{ secrets.SFTP_USERNAME }}
+        password: ${{ secrets.SFTP_PASSWORD }}
         local-dir: ./ # The local directory to upload
-        server-dir: ${{ secrets.SERVER_PATH }} # The server directory to upload to
-
-    - name: Set correct permissions
-      run: |
-        ssh ${{ secrets.USERNAME }}@${{ secrets.SERVER }} 'chmod -R 755 ${{ secrets.SERVER_PATH }}/storage ${{ secrets.SERVER_PATH }}/bootstrap/cache'
+        remote-dir: ${{ secrets.SFTP_SERVER_PATH }} # The server directory to upload to
