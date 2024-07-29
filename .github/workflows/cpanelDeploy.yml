@@ -29,6 +29,5 @@ jobs:
         server: ${{ secrets.SERVER }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        protocol: ftps
         port: 21
         timeout: 60000 # Menambah waktu timeout menjadi 60 detik
