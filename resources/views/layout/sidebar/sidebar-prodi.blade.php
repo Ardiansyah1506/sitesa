@@ -30,7 +30,7 @@
   <li class="nav-item @if ($active == "waktu-ta") active @endif">
     <a href="{{ route('prodi.waktu-ta') }}">
       <i class="icon-hourglass"></i>
-      <p>Masa TA</p>
+      <p>Waktu TA</p>
     </a>
   </li>
 

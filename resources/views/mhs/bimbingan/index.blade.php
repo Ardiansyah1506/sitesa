@@ -12,7 +12,7 @@
                     <h2>Bab 1</h2>
         @if(!$showBab2)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab1Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab1Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
@@ -41,7 +41,7 @@
                     <h2>Bab 2</h2>
         @if(!$showBab3)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab2Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab2Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
@@ -71,7 +71,7 @@
                     <h2>Bab 3</h2>
         @if(!$showBab4)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab3Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab3Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
@@ -101,7 +101,7 @@
                     <h2>Bab 4</h2>
         @if(!$showBab5)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab4Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab4Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
@@ -131,7 +131,7 @@
                     <h2>Bab 5</h2>
         @if(!$showBab6)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab5Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab5Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
@@ -161,7 +161,7 @@
                     <h2>Bab 6</h2>
         @if(!$showBab6)
                    
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bab6Modal">Upload File</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab6Modal">Upload File</button>
                 @endif
                 </div>
                 <div class="table-responsive mt-3">

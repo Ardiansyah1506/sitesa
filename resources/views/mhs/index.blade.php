@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3>Tesis</h3>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tesisModal">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tesisModal">
                         Tambah Tesis
                     </button>
                     <div class="table-responsive mt-3">

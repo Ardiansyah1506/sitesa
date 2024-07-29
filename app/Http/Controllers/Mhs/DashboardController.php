@@ -7,7 +7,11 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    private $title = 'Dashboard';
     public function index(){
-        return view('mhs.index');
+        $data = [
+            'title' => $this->title
+        ];
+        return view('mhs.index', $data);
     }
 }

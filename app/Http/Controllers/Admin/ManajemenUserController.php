@@ -11,9 +11,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ManajemenUserController extends Controller
 {
+    protected $title = 'Manajemen User';
+    protected $active = 'admin-user';
     public function index(){
-        return view('admin.user.index');
-        
+        $data = [
+            'title'=> $this->title,
+            'active'=> $this->active,
+        ];
+        return view('admin.user.index', $data);
     }
     public function getData() {
         $data = User::all();

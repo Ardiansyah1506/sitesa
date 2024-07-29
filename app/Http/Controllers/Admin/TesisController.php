@@ -8,8 +8,14 @@ use App\Http\Controllers\Controller;
 
 class TesisController extends Controller
 {
+    protected $title = 'Tesis';
+    protected $active = 'admin-tesis';
     public function index(){
-        return view('admin.tesis.index');
+        $data = [
+            'title' => $this->title,
+            'active' => $this->active,
+        ];
+        return view('admin.tesis.index', $data);
     }
     public function getData(){
         // Mengambil data tesis dengan status '1'

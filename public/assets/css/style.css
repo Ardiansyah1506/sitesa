@@ -1,0 +1,26 @@
+.bg-dark-green{
+    background-color: rgb(18, 30, 18);
+    color:white;
+}
+
+.sidebar[data-background-color="light"] {
+    background-color: #f8f9fa; /* Warna latar belakang terang */
+}
+
+.sidebar[data-background-color="dark"] {
+    background-color: #343a40; /* Warna latar belakang gelap */
+}
+
+.logo-header[data-background-color="light"] {
+    background-color: #f8f9fa; /* Warna latar belakang terang */
+}
+
+.logo-header[data-background-color="dark-green"] {
+    background-color: #0d2311; /* Warna latar belakang gelap */
+}
+
+/* .active {
+    background-color: #00ff0863;
+    color: white;
+    font-weight: bold;
+} */

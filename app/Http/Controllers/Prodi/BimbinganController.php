@@ -11,9 +11,11 @@ class BimbinganController extends Controller
     private $url = 'prodi/bimbingan/';
     private $views = 'prodi/bimbingan/';
     private $active = 'bimbingan-langsung';
+    private $title = 'Sedang Bimbingan';
 
     public function index(){
         $data = [
+            'title' => $this->title,
             'url' =>$this -> url,
             'views' =>$this -> views,
             'active' =>$this -> active,

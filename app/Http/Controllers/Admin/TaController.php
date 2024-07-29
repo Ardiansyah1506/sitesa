@@ -11,8 +11,14 @@ use App\Http\Controllers\Controller;
 
 class TaController extends Controller
 {
+    protected $title = 'Tugas Akhir';
+    protected $active = 'admin-ta';
     public function index(){
-        return view('admin.ta.index');
+        $data = [
+            'title' => $this->title,
+            'active' => $this->active,
+        ];
+        return view('admin.ta.index', $data);
     }
     public function getData()
     {

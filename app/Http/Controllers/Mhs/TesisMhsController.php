@@ -13,8 +13,15 @@ use Illuminate\Support\Facades\Auth;
 
 class TesisMhsController extends Controller
 {
+    private $title = 'Tesis';
+    private $active = 'home-mhs';
     public function index(){
-        return view('mhs.index');
+        $data = [
+            'title' =>$this->title,
+            'active' =>$this->active,
+            
+        ];
+        return view('mhs.index', $data);
     }
 
     public function getData(){

@@ -52,7 +52,7 @@ class BimbinganController extends Controller
             ->editColumn('ta_1', function ($row) {
                 switch($row->ta_1){
                     case 0:
-                        return '<span class="badge badge-warning">Kosong</span>';
+                        return '<span class="badge badge-warning">Belum</span>';
                     case 1:
                         return 'Lulus';
                     default:
@@ -62,7 +62,7 @@ class BimbinganController extends Controller
             ->editColumn('ta_2', function ($row) {
                 switch($row->ta_2){
                     case 0:
-                        return '<span class="badge badge-warning">Kosong</span>';
+                        return '<span class="badge badge-warning">Belum</span>';
                     case 1:
                         return 'Lulus';
                     default:
@@ -105,6 +105,7 @@ class BimbinganController extends Controller
             'bab5' => $babList->get(5),
             'bab6' => $babList->get(6),
         ];
+
 
         return view('dosbim.bimbingan.detail', $data);
     }

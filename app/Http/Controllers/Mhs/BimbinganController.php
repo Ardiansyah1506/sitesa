@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 
 class BimbinganController extends Controller
 {
+    private $title = 'Bimbingan';
+    private $active = 'bimbingan-mhs';
+
     public function index()
 {
     $nim = Auth::user()->username;
@@ -23,6 +26,8 @@ class BimbinganController extends Controller
     $bab5 = Bab::where('nim', $nim)->where('id_kategori', 5)->get();
     $bab6 = Bab::where('nim', $nim)->where('id_kategori', 6)->get();
 
+    $title = $this->title;
+    $active = $this->active;
     $showBab2 = !$bab1->isEmpty() && $bab1->every(function ($item) {
         return $item->status == 1;
     });
@@ -43,7 +48,7 @@ class BimbinganController extends Controller
         return $item->status == 1;
     });
 
-    return view('mhs.bimbingan.index', compact('bab1', 'bab2', 'bab3', 'bab4', 'bab5', 'bab6', 'showBab2', 'showBab3', 'showBab4', 'showBab5', 'showBab6'));
+    return view('mhs.bimbingan.index', compact('bab1', 'bab2', 'bab3', 'bab4', 'bab5', 'bab6', 'showBab2', 'showBab3', 'showBab4', 'showBab5', 'showBab6', 'title', 'active'));
 }
 
 

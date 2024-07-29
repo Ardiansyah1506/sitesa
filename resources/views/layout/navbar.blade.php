@@ -3,7 +3,7 @@
       <nav
         class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
       >
-        
+        <img src="{{ asset('assets/img/logo-program-pascasarjana.png') }}" alt="" height="50">
       </nav>
 
       <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -42,13 +42,18 @@
           >
             <div class="avatar-sm">
               <img
-                src="{{ asset('assets/img/flags/id.png') }}"
+                src="{{ asset('assets/img/profile.jpg') }}"
                 alt="..."
                 class="avatar-img rounded-circle"
               />
             </div>
             <span class="profile-username">
-              <span class="fw-bold">{{ auth()->user()->username }}</span>
+              <span class="">{{ auth()->user()->username }}</span> 
+              @if(auth()->user()->role == 3 && auth()->user()->dosen)
+                | <span class="fw-bold">{{ auth()->user()->dosen->nama }}</span>
+              @elseif(auth()->user()->role == 4 && auth()->user()->mahasiswa)
+                | <span class="fw-bold">{{ auth()->user()->mahasiswa->nama }}</span>
+              @endif
             </span>
           </a>
           <ul class="dropdown-menu dropdown-user animated fadeIn">

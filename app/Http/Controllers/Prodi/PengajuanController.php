@@ -33,7 +33,7 @@ class PengajuanController extends Controller
             ->addColumn('actions', function ($data) {
                 $url = route('prodi.detail-bimbingan', $data->nip);
                 return '<div class="btn-group gap-1" merk="group">
-                            <a class="btn btn-primary" href="'. $url .'">Detail</a>                     
+                            <a class="btn btn-success" href="'. $url .'">Detail</a>                     
                         </div>';
             })
             ->rawColumns(['actions'])

@@ -14,8 +14,15 @@ use Illuminate\Validation\Rules\Exists;
 
 class PembimbingController extends Controller
 {
+    private $title = 'Pengajuan Bimbingan';
+    private $active = 'pembimbing-mhs';
+
     public function index(){
-        return view('mhs.pembimbing.index');
+        $data = [
+            'title' => $this->title,
+            'active' => $this->active
+        ];
+        return view('mhs.pembimbing.index', $data);
     }
 
     public function getDataPembimbing()
@@ -35,7 +42,7 @@ class PembimbingController extends Controller
                 if ($cekData) {
                     return '<span>Dalam Pengajuan</span>';
                 } else if ($row->sisa_kuota > 0) {
-                    return '<button class="btn btn-primary acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
+                    return '<button class="btn btn-success acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
                 } else {
                     return '<span>Kuota Sudah Penuh</span>';
                 }

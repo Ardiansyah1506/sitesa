@@ -1,13 +1,13 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>{{ $title }} - Sistem Informasi Tesis Aswaja</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
     <link
       rel="icon"
-      href="{{ url('') }}/assets/img/kaiadmin/favicon.ico"
+      href="{{ url('') }}/assets/img/icon-unwahas.png"
       type="image/x-icon"
     />
 
@@ -36,5 +36,6 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="{{ url('') }}/assets/css/style.css" />
 
   </head>
