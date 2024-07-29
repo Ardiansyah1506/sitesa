@@ -20,10 +20,11 @@
                 <th>No</th>
                   <th>Nim</th>
                   <th>Nama Mahasiswa</th>
-                  <th>Status</th>
+                  <th>Judul</th>
                   <th>TA 1</th>
                   <th>TA 2</th>
                   <th>No Hp</th>
+                  <th>Email</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -59,10 +60,11 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'nim', name: 'nim'},
                 {data: 'nama', name: 'nama'},
-                {data: 'status', name: 'status'},
+                {data: 'judul', name: 'judul'},
                 {data: 'ta_1', name: 'ta_1'},
                 {data: 'ta_2', name: 'ta_2'},
                 {data: 'no_hp', name: 'no_hp'},
+                {data: 'email', name: 'email'},
                 {data: 'actions', name: 'actions'}
             ]
         });
