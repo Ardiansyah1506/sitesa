@@ -12,7 +12,7 @@
                     <input type="hidden" id="id-edit-mhs" name="nim">
                     <div class="form-group">
                         <label for="nama-mahasiswa">Nama Mahasiswa</label>
-                        <input type="text" id="nama-mahasiswa" class="form-control" name="nama">
+                        <input type="text" id="nama-mahasiswa" class="form-control" name="nama" readonly>
                     </div>
                     <div class="form-group">
                         <label for="pembimbing-1">Pembimbing Pertama</label>
