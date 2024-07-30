@@ -23,6 +23,7 @@
                   <th>TA 1</th>
                   <th>TA 2</th>
                   <th>Nama Pembimbing</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -33,6 +34,7 @@
       </div>
     </div>
   </div>
+@include('prodi.bimbingan.modal')
 @endsection
 
 {{-- tempat js custom --}}
@@ -60,9 +62,43 @@
                 {data: 'ta_1', name: 'ta_1'},
                 {data: 'ta_2', name: 'ta_2'},
                 {data: 'nama_pembimbing', name: 'nama_pembimbing'},
+                {data: 'actions', name: 'actions'},
             ]
         });
+});
+$('#dataTables1').on('click', '.ubah-bimbingan', function() {
+    $('#modalEditBimbingan').modal('show'); // Use Bootstrap modal method
+
+    let dataNim = $(this).data('id');
+    console.log('clicked', dataNim);
+
+    // Buat URL secara dinamis
+    let url = "{{ route('prodi.ubah-bimbingan', ':dataNim') }}";
+    url = url.replace(':dataNim', dataNim);
+
+    $.ajax({
+        url: url,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            let isi = response.data;
+            if (isi.length > 0) {
+                // Set the nim and name value only once
+                $('#id-edit-mhs').val(isi[0].nim);
+                $('#nama-mahasiswa').val(isi[0].nama);
+            }
+            isi.forEach((element, index) => {
+              console.log('#pembimbing-' + (index + 1))
+                $('#pembimbing-' + (index + 1)).val(element.nip);
+            });
+        },
+        error: function(xhr, status, error) {
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+        }
     });
+});
+
+
 </script>
 
 @endsection

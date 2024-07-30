@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="modalEditTA" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

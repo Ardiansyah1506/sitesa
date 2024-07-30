@@ -25,6 +25,8 @@ Route::controller(PengajuanController::class)->group(function() {
 Route::controller(BimbinganController::class)->group(function() {
     Route::get('/bimbingan', 'index')->name('bimbingan');
     Route::get('/bimbingan/get-data', 'getData')->name('get-data');
+    Route::get('/bimbingan/ubah-bimbingan/{nim?}', 'edit')->name('ubah-bimbingan');
+    Route::put('/bimbingan/update-bimbingan', 'updateBimbingan')->name('update-bimbingan');
 });
 
 Route::controller(SetWaktuTAController::class)->group(function() {

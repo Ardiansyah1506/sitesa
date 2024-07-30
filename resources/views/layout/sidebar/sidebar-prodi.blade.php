@@ -36,7 +36,7 @@
 
   <li class="nav-item @if ($active == "kuota-pembimbing") active @endif">
     <a href="{{ route('prodi.kuota-pembimbing') }}">
-      <i class="icon-user-following"></i>
+      <i class="icon-calculator"></i>
       <p>Kuota Pembimbing</p>
     </a>
   </li>
