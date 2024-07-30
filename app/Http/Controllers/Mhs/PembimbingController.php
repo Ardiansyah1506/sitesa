@@ -27,21 +27,28 @@ class PembimbingController extends Controller
 
     public function getDataPembimbing()
     {
+        $nim = Auth::user()->username;
         // Mengambil data pembimbing dengan join
         $data = Dosen::join('ref_kuota', 'dosen.nip', '=', 'ref_kuota.nip')
                      ->select('dosen.nama', 'dosen.nip', 'ref_kuota.sisa_kuota', 'dosen.id')
                      ->get();
     
+        // Hitung jumlah pengajuan bimbingan oleh mahasiswa
+        $jumlahPengajuan = Bimbingan::where('nim', $nim)->count();
+    
         return \DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('aksi', function ($row) {
+            ->addColumn('aksi', function ($row) use ($jumlahPengajuan) {
                 // Cek apakah mahasiswa sudah mengajukan bimbingan dengan dosen tersebut
                 $cekData = Bimbingan::where('nip', $row->nip)
                                      ->where('nim', Auth::user()->username)
                                      ->exists();
-                if ($cekData) {
+    
+                if ($jumlahPengajuan >= 2) {
+                    return '<button class="btn btn-success acc-button" data-nip="' . $row->nip . '" disabled>Ajukan</button>';
+                } elseif ($cekData) {
                     return '<span>Dalam Pengajuan</span>';
-                } else if ($row->sisa_kuota > 0) {
+                } elseif ($row->sisa_kuota > 0) {
                     return '<button class="btn btn-success acc-button" data-nip="' . $row->nip . '">Ajukan</button>';
                 } else {
                     return '<span>Kuota Sudah Penuh</span>';
@@ -50,6 +57,7 @@ class PembimbingController extends Controller
             ->rawColumns(['aksi'])
             ->make(true);
     }
+    
 
     public function PengajuanBimbingan(Request $request)
     {
@@ -110,5 +118,11 @@ class PembimbingController extends Controller
     
         Log::info('Pengajuan bimbingan berhasil', ['nim' => $nim, 'nip' => $nip]);
         return response()->json(['success' => 'Pengajuan bimbingan berhasil'], 200);
+    }
+
+    public function cekPengajuan(){
+        $nim = Auth::user()->username;
+        $data = Bimbingan::where('nim', $nim)->count();
+        return response()->json($data);
     }
 }

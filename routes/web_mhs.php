@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\Mhs\BimbinganController;
+use App\Http\Controllers\Mhs\TaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Mhs\TesisMhsController;
+use App\Http\Controllers\Mhs\BimbinganController;
 use App\Http\Controllers\Mhs\DashboardController;
+use App\Http\Controllers\Mhs\DokumenController;
 use App\Http\Controllers\Mhs\PembimbingController;
+use App\Http\Controllers\Prodi\SetWaktuTAController;
 
 Route::prefix('mahasiswa')->name('mhs.')->group(function() {
 
@@ -21,6 +24,7 @@ Route::controller(PembimbingController::class)->group(function() {
     Route::get('/pembimbing', 'index')->name('pembimbing.index');
     Route::get('/getDataPembimbing', 'getDataPembimbing')->name('pembimbing.getDataPembimbing');
     Route::post('/pengajuanpembimbing', 'PengajuanBimbingan')->name('pembimbing.PengajuanBimbingan');
+    Route::get('/cekPengajuan', 'cekPengajuan')->name('pembimbing.cekPengajuan');
     });
 
 Route::controller(BimbinganController::class)->group(function() {
@@ -28,5 +32,13 @@ Route::controller(BimbinganController::class)->group(function() {
     Route::get('/bimbingan/data/{id_kategori}',  'getData')->name('bimbingan.getDataBimbingan');
     Route::post('/bimbingan/upload/{id_kategori}',  'uploadBab')->name('bimbingan.uploadBab');
     });
-    
+    Route::controller(TaController::class)->group(function() {
+        Route::get('/ta', 'index')->name('ta.waktu');
+        Route::get('/waktu-ta/get-data', 'getData')->name('ta.getData');
+        Route::post('/ta/pengajuan', 'createPengajuan')->name('ta.createPengajuan');
+    });
+    Route::controller(DokumenController::class)->group(function() {
+        Route::get('/dokumen', 'index')->name('ta.nota');
+        Route::get('/dokumen/p', 'proposal')->name('ta.propo');
+    });
 });

@@ -30,49 +30,65 @@
 
 @section('js-custom')
 <script>
-    $(document).ready(function() {
-        // Load table data
-        $('#datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: "{{ route('mhs.pembimbing.getDataPembimbing') }}",
-            columns: [
-                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                { data: 'nip', name: 'nip' },
-                { data: 'nama', name: 'nama' },
-                { data: 'sisa_kuota', name: 'sisa_kuota' },
-                { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
-            ],
-            language: {
-                emptyTable: "Tidak ada data pembimbing yang tersedia"
+   $(document).ready(function() {
+    // Load table data
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('mhs.pembimbing.getDataPembimbing') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+            { data: 'nip', name: 'nip' },
+            { data: 'nama', name: 'nama' },
+            { data: 'sisa_kuota', name: 'sisa_kuota' },
+            { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+        ],
+        language: {
+            emptyTable: "Tidak ada data pembimbing yang tersedia"
+        }
+    });
+    
+    // Check pengajuan
+    $.ajax({
+        url: "{{ route('mhs.pembimbing.cekPengajuan') }}",
+        method: 'get',
+        success: function(response) {
+            if (response >= 2) {
+                $('.acc-button').prop('disabled', true);
+                $('#datatable tbody').append('<tr><td colspan="5">Anda sudah mengajukan 2 dosen pembimbing. Silakan hubungi admin.</td></tr>');
+            }
+        },
+        error: function(response) {
+            alert('Terjadi kesalahan');
+        }
+    });
+
+    // Handle button click for Ajukan
+    $(document).on('click', '.acc-button', function() {
+        var nip = $(this).data('nip');
+        console.log('NIP:', nip);  // Debugging: Log the NIP to the console
+
+        // Implementasi aksi untuk ajukan, misalnya dengan AJAX request
+        $.ajax({
+            url: "{{ route('mhs.pembimbing.PengajuanBimbingan') }}",
+            method: 'POST',
+            data: {
+                nip: nip,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Pengajuan berhasil');
+                    $('#datatable').DataTable().ajax.reload();
+                } else {
+                    alert('Pengajuan gagal: ' + response.error);
+                }
+            },
+            error: function(response) {
+                alert('Terjadi kesalahan');
             }
         });
-
-        // Handle button click for Ajukan
-        $(document).on('click', '.acc-button', function() {
-            var nip = $(this).data('nip');
-            console.log('NIP:', nip);  // Debugging: Log the NIP to the console
-            // Implementasi aksi untuk ajukan, misalnya dengan AJAX request
-            $.ajax({
-                url: "{{ route('mhs.pembimbing.PengajuanBimbingan') }}",
-                method: 'POST',
-                data: {
-                    nip: nip,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert('Pengajuan berhasil');
-                        $('#datatable').DataTable().ajax.reload();
-                    } else {
-                        alert('Pengajuan gagal: ' + response.error);
-                    }
-                },
-                error: function(response) {
-                    alert('Terjadi kesalahan');
-                }
-            });
-        });
     });
+});
 </script>
 @endsection
