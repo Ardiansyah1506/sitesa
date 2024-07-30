@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DosenPembimbingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TaController;
 use App\Http\Controllers\Admin\TesisController;
@@ -54,6 +55,12 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('/mahasiswa/get-data-detail/{id?}', 'getDataDetail')->name('get-mahasiswa-detail');
         Route::get('/mahasiswa/edit/{id?}', 'edit')->name('edit-mhs');
         Route::put('/mahasiswa/update-mhs', 'updateMhs')->name('update-mhs');
+        // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
+    });
+
+    Route::controller(DosenPembimbingController::class)->group(function() {
+        Route::get('/dosen', 'index')->name('dosen.index');
+        Route::get('/dosen/get-data', 'getData')->name('dosen.getData');
         // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
     });
 
