@@ -5,7 +5,7 @@
   @yield('css-library')
   @yield('css-custom')
   <body>
-    <div class="wrapper d-flex justify-content-center align-items-center">
+    <div class="wrapper d-flex justify-content-center align-items-center bg-cuy">
         <div class="container">
           <div class="page-inner">
             @yield('content')

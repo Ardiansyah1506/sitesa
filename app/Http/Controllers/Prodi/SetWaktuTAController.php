@@ -49,7 +49,7 @@ class SetWaktuTAController extends Controller
             })
             ->addColumn('actions', function ($data) {
                 return '<div class="btn-group gap-1" merk="group">
-                            <button type="button" class="btn btn-sm btn-primary rounded edit-ta" data-id="' . $data->id . '">Ubah</button>
+                            <button type="button" class="btn btn-sm btn-success rounded edit-ta" data-id="' . $data->id . '">Ubah</button>
                         </div>';
             })
             ->rawColumns(['actions', 'status'])

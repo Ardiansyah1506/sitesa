@@ -19,8 +19,19 @@
     background-color: #0d2311; /* Warna latar belakang gelap */
 }
 
-/* .active {
-    background-color: #00ff0863;
-    color: white;
-    font-weight: bold;
-} */
+.bg-cuy{
+    background: rgb(255,255,255);
+background: -moz-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#00992a",GradientType=1);
+}
+
+.bg-main{
+    height: auto;
+    background: rgb(255,255,255);
+    background: -moz-linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
+    background: -webkit-linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
+    background: linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#00bf34",GradientType=1);
+}

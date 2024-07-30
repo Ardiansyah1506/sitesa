@@ -34,7 +34,7 @@ class DosenController extends Controller
             ->addIndexColumn()
             ->addColumn('actions', function ($data) {
                 return '<div class="btn-group gap-1" merk="group">
-                            <button type="button" class="btn btn-sm btn-primary rounded edit-mhs" data-id="' . $data->nip . '">Set Jadi Pembimbing</button>
+                            <button type="button" class="btn btn-sm btn-success rounded edit-mhs" data-id="' . $data->nip . '">Set Jadi Pembimbing</button>
                         </div>';
             })
             ->rawColumns(['actions'])

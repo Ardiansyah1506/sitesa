@@ -141,7 +141,7 @@
                 url: "{{ route('admin.user.nip') }}",
                 method: 'GET',
                 success: function(response) {
-                    var options = '<option value="">Pilih NIP</option>';
+                    var options = '<option value="" disabled selected>Pilih NIP</option>';
                     response.forEach(function(dosen) {
                         options += '<option value="' + dosen.nip + '">' + dosen.nip + ' - ' + dosen.nama + '</option>';
                     });
@@ -156,7 +156,7 @@
                 url: "{{ route('admin.user.nim') }}",
                 method: 'GET',
                 success: function(response) {
-                    var options = '<option value="">Pilih NIM</option>';
+                    var options = '<option value="" disabled selected>Pilih NIM</option>';
                     response.forEach(function(mahasiswa) {
                         options += '<option value="' + mahasiswa.nim + '">' + mahasiswa.nim + ' - ' + mahasiswa.nama + '</option>';
                     });

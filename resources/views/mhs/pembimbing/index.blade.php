@@ -53,6 +53,7 @@
         url: "{{ route('mhs.pembimbing.cekPengajuan') }}",
         method: 'get',
         success: function(response) {
+            console.log(response);
             if (response >= 2) {
                 $('.acc-button').prop('disabled', true);
                 $('#datatable tbody').append('<tr><td colspan="5">Anda sudah mengajukan 2 dosen pembimbing. Silakan hubungi admin.</td></tr>');
@@ -86,6 +87,7 @@
             },
             error: function(response) {
                 alert('Terjadi kesalahan');
+                console.err(response)
             }
         });
     });

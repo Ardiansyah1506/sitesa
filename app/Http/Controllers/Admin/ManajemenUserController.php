@@ -107,7 +107,9 @@ class ManajemenUserController extends Controller
         
 
     public function getNim(){
-        $mahasiswas = Mahasiswa::select('id', 'nama', 'nim')->get();
+        $mahasiswas = Mahasiswa::select('id', 'nama', 'nim')
+        ->orderBy('nama', 'asc')
+        ->get();
         return response()->json($mahasiswas);
     }
 

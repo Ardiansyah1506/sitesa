@@ -5,8 +5,8 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
-            <img src="{{ asset('assets/img/logo-unwahas.png') }}" class="img-fluid mb-3">
-              <h3 class="mb-5 fw-bold">Log In</h3>
+            <img src="{{ asset('assets/img/logo-unwahas.png') }}" class="img-fluid mb-5">
+              {{-- <h3 class="mb-5 fw-bold">Log In</h3> --}}
                 
               <form action="{{ route('process-login') }}" method="POST">
                 @csrf
@@ -19,7 +19,9 @@
                     <input type="password" id="password" class="form-control form-control-lg" name="password" placeholder="Password"/>
                     <label class="form-label" for="password">Password</label>
                 </div>
-    
+                @error('username')
+                  <p class="form-text text-muted text-danger" >{{ $message }}</p>
+                @enderror
                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-lg btn-block" type="submit">Login</button>
             </form>
             </div>

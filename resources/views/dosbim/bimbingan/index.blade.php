@@ -19,7 +19,7 @@
                 <tr>
                 <th>No</th>
                   <th>Nim</th>
-                  <th>Nama Mahasiswa</th>
+                  <th>Nama</th>
                   <th>Judul</th>
                   <th>TA 1</th>
                   <th>TA 2</th>

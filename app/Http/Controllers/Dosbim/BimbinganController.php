@@ -27,56 +27,56 @@ class BimbinganController extends Controller
     }
 
     public function getData()
-{
-    $user = auth()->user();
-    if (!$user) {
-        return response()->json(['error' => 'User not authenticated'], 401);
-    }
-    
-    $data = DB::table('mhs_bimbingan_ta as bimbingan')
-        ->join('tesis', 'tesis.nim', '=', 'bimbingan.nim')
-        ->where('bimbingan.nip', $user->username)
-        ->where('bimbingan.status', 1)
-        ->select([
-            'bimbingan.nim', 
-            'bimbingan.nama',
-            'bimbingan.ta_1', 
-            'bimbingan.ta_2', 
-            'bimbingan.no_hp', 
-            'bimbingan.email',
-            'tesis.judul'
-        ])->get();
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+        
+        $data = DB::table('mhs_bimbingan_ta as bimbingan')
+            ->join('tesis', 'tesis.nim', '=', 'bimbingan.nim')
+            ->where('bimbingan.nip', $user->username)
+            ->where('bimbingan.status', 1)
+            ->select([
+                'bimbingan.nim', 
+                'bimbingan.nama',
+                'bimbingan.ta_1', 
+                'bimbingan.ta_2', 
+                'bimbingan.no_hp', 
+                'bimbingan.email',
+                'tesis.judul'
+            ])->get();
 
-    return \DataTables::of($data)
-        ->addIndexColumn()
-        ->editColumn('ta_1', function ($row) {
-            switch ($row->ta_1) {
-                case 0:
-                    return '<span class="badge badge-warning">Belum</span>';
-                case 1:
-                    return 'Lulus';
-                default:
-                    return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
-            }
-        })
-        ->editColumn('ta_2', function ($row) {
-            switch ($row->ta_2) {
-                case 0:
-                    return '<span class="badge badge-warning">Belum</span>';
-                case 1:
-                    return 'Lulus';
-                default:
-                    return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
-            }
-        })
-        ->addColumn('actions', function ($row) {
-            return '<div class="btn-group gap-1" role="group">
-                        <a type="button" href="' . route('dosbim.detail-bimbingan', $row->nim) . '" class="btn btn-sm btn-primary rounded">Detail</a>
-                    </div>';
-        })
-        ->rawColumns(['ta_1', 'ta_2', 'actions'])
-        ->make(true);
-}
+        return \DataTables::of($data)
+            ->addIndexColumn()
+            ->editColumn('ta_1', function ($row) {
+                switch ($row->ta_1) {
+                    case 0:
+                        return '<span class="badge badge-warning">Belum</span>';
+                    case 1:
+                        return 'Lulus';
+                    default:
+                        return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
+                }
+            })
+            ->editColumn('ta_2', function ($row) {
+                switch ($row->ta_2) {
+                    case 0:
+                        return '<span class="badge badge-warning">Belum</span>';
+                    case 1:
+                        return 'Lulus';
+                    default:
+                        return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
+                }
+            })
+            ->addColumn('actions', function ($row) {
+                return '<div class="btn-group gap-1" role="group">
+                            <a type="button" href="' . route('dosbim.detail-bimbingan', $row->nim) . '" class="btn btn-sm btn-success rounded">Detail</a>
+                        </div>';
+            })
+            ->rawColumns(['ta_1', 'ta_2', 'actions'])
+            ->make(true);
+    }
     
     public function detail($nim = NULL)
     {
