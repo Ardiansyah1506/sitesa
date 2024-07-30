@@ -40,3 +40,10 @@
       <p>Kuota Pembimbing</p>
     </a>
   </li>
+
+  <li class="nav-item @if ($active == "Dosen") active @endif">
+    <a href="{{ route('prodi.dosen.index') }}">
+      <i class="icon-user-following"></i>
+      <p>Dosen Pembimbing</p>
+    </a>
+  </li>

@@ -10,5 +10,5 @@ class RefKuota extends Model
     use HasFactory;
 
     protected $table = 'ref_kuota';
-    protected $guarded = 'id';
+    protected $guarded = ['id'];
 }

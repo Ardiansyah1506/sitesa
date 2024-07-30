@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Prodi;
 
-use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use App\Models\Prodi\Kuota;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Models\RefKuota;
 
 class KuotaPembimbingController extends Controller
 {
@@ -24,25 +27,35 @@ class KuotaPembimbingController extends Controller
 
     public function getData()
     {
-            $data = DB::table('users')
-            ->join('ref_kuota as kuota', 'users.username', '=', 'kuota.nip')
-            ->join('dosen', 'users.username', '=', 'dosen.nip')
-            ->where('users.role', 3)
-            ->select(['users.username', 'kuota.nip' , 'kuota.sisa_kuota', 'dosen.nama'])
-            ->get();
-
+        $data = Dosen::where('status','!=',0)->join('ref_kuota', 'ref_kuota.nip', 'dosen.nip')
+        ->select(['dosen.nama', 'dosen.nip','sisa_kuota'])
+        ->get();
+    
         return \DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('actions', function ($data) {
-                return '<div class="btn-group gap-1" merk="group">
-                            <button type="button" class="btn btn-sm btn-primary rounded edit-mhs" data-id="' . $data->nip . '">Ubah</button>
-                        </div>';
+            ->addColumn('sisa_kuota', function ($data) {
+               $kuota = RefKuota::where('nip',$data->nip)->select('sisa_kuota')->first();;
+                return $kuota->sisa_kuota;
             })
-            ->rawColumns(['actions'])
+            ->addColumn('status', function ($data) {
+                $statusText = '';
+    
+                if ($data->status == 0) {
+                    $statusText = '<span class="badge bg-warning">Pengajuan</span>';
+                } elseif ($data->status == 1) {
+                    $statusText = '<span class="badge bg-success">Diterima</span>';
+                }
+    
+                return '<div class="badge-group gap-1">' . $statusText . '</div>';
+            })
+            ->rawColumns(['status','sisa_kuota'])
             ->make(true);
     }
 
 
+
+
+    
     // public function store(Request $request){
     //     $data = [
     //         'nama' => $request->nama,
@@ -60,14 +73,11 @@ class KuotaPembimbingController extends Controller
     // }
 
     public function edit($id = NULL){
+        $data = DB::table('dosen')
+        ->where('nip',$id)
+        ->select(['dosen.nama', 'dosen.nip'])
+        ->first();
 
-        $data = DB::table('users')
-            ->join('ref_kuota as kuota', 'users.username', '=', 'kuota.nip')
-            ->join('dosen', 'users.username', '=', 'dosen.nip')
-            ->where('users.role', 3)
-            ->where('users.username', '=', $id)
-            ->select(['users.username', 'kuota.nip' , 'kuota.sisa_kuota', 'dosen.nama'])
-            ->first();
 
         if ($data == null) {
             return response()->json([
@@ -86,17 +96,6 @@ class KuotaPembimbingController extends Controller
         }
     }
 
-    public function update(Request $request){
-        $data = Kuota::where('nip', $request->nip)->first();
-        $updated = [
-            'sisa_kuota'=> $request->sisaKuota,
-        ];
-       $save = $data->update($updated);
+   
 
-       if($save){
-            return redirect($this->url)->with('success', 'Berhasil Merubah');
-       }else{
-            return redirect($this->url)->with('error', 'Gagal Merubah');
-       }
-    }
 }

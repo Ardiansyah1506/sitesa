@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Prodi\DashboardController;
 use App\Http\Controllers\Prodi\SetWaktuTAController;
 use App\Http\Controllers\Prodi\BimbinganController;
+use App\Http\Controllers\Prodi\DosenController;
 use App\Http\Controllers\Prodi\KuotaPembimbingController;
 use App\Http\Controllers\Prodi\PengajuanController;
 
@@ -37,9 +38,14 @@ Route::controller(SetWaktuTAController::class)->group(function() {
 
 Route::controller(KuotaPembimbingController::class)->group(function() {
     Route::get('/kuota-pembimbing', 'index')->name('kuota-pembimbing');
-    Route::get('/kuota-pembimbing/get-data', 'getData')->name('get-data');
-    Route::get('/kuota-pembimbing/edit/{id?}', 'edit')->name('edit-kuota-pembimbing');
-    Route::put('/kuota-pembimbing/update', 'update')->name('update-kuota-pembimbing');
+    Route::get('/kuota-pembimbing/get-data', 'getData')->name('kuota.getDataKuota');
+});
+
+Route::controller(DosenController::class)->group(function() {
+    Route::get('dosen', 'index')->name('dosen.index');
+    Route::get('/dosen/get-data', 'getData')->name('dosen.getDataKuota');
+    Route::get('/dosen/edit/{id?}', 'edit')->name('dosen.edit-dosen');
+    Route::post('/dosen/update', 'store')->name('dosen.updateKuotaPembimbing');
 });
 
 
