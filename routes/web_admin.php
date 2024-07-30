@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TaController;
 use App\Http\Controllers\Admin\TesisController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\ManajemenUserController;
+use App\Http\Controllers\Admin\PengajuanController;
+use App\Http\Controllers\Admin\PengajuanTAController;
 
 Route::prefix('admin/')->name('admin.')->group(function() {
 
@@ -33,6 +36,26 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('ta', 'index')->name('ta.index');
         Route::get('ta/get', 'getData')->name('ta.getdata');
         Route::post('ta/updatestatus', 'updateStatus')->name('ta.updatestatus');
-        Route::get('ta/gettanggal', [TaController::class, 'getTanggalTa'])->name('ta.gettanggal');
+        Route::post('ta/updatestatusta', 'updateSelesaiTA')->name('ta.updateSelesaiTa');
+        Route::get('ta/gettanggal', 'getTanggalTa')->name('ta.gettanggal');
     });
+
+    Route::controller(PengajuanController::class)->group(function() {
+        Route::get('/pengajuan', 'index')->name('pengajuan');
+        Route::get('/pengajuan/get-data', 'getData')->name('get-data');
+        Route::get('/pengajuan/get-data-detail/{id?}', 'getDataDetail')->name('get-data-detail');
+        Route::put('/pengajuan/acc/{id?}', 'acc')->name('acc');
+        Route::get('/pengajuan/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
+    });
+
+    Route::controller(MahasiswaController::class)->group(function() {
+        Route::get('/mahasiswa', 'index')->name('mahasiswa');
+        Route::get('/mahasiswa/get-data', 'getData')->name('get-data');
+        Route::get('/mahasiswa/get-data-detail/{id?}', 'getDataDetail')->name('get-mahasiswa-detail');
+        Route::get('/mahasiswa/edit/{id?}', 'edit')->name('edit-mhs');
+        Route::put('/mahasiswa/update-mhs', 'updateMhs')->name('update-mhs');
+        // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
+    });
+
+
 });

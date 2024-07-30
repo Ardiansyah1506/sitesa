@@ -4,6 +4,9 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
+                <div class="p-4">
+                    <h2>Tugas Akhir</h2>
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered dt-responsive" id="datatable">
@@ -13,8 +16,9 @@
                                     <th>Nama</th>
                                     <th>NIM</th>
                                     <th>Judul</th>
-                                    <th>Translate</th>
-                                    <th>Abstrak</th>
+                                    <th>TA</th>
+                                    <th>File</th>
+                                    <th>Tanggal</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -82,12 +86,18 @@
                         name: 'judul'
                     },
                     {
-                        data: 'translate',
-                        name: 'translate'
+                        data: 'kode_ta',
+                        name: 'kode_ta'
                     },
                     {
-                        data: 'abstrak',
-                        name: 'abstrak'
+                        data: 'nama_file',
+                        name: 'nama_file',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'tanggal',
+                        name: 'tanggal'
                     },
                     {
                         data: 'status',
@@ -156,6 +166,33 @@
                 });
 
             });
+            $(document).on('click', '.selesai-button', function() {
+                var id = $(this).data('id');
+
+                // Menampilkan konfirmasi
+                var confirmation = confirm("Apakah Anda yakin ingin menyelesaikan TA ini?");
+
+                // Jika pengguna mengonfirmasi, jalankan AJAX
+                if (confirmation) {
+                    $.ajax({
+                        url: "{{ route('admin.ta.updateSelesaiTa') }}",
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: id,
+                        },
+                        success: function(response) {
+                            table.ajax.reload();
+                            alert(response.message);
+                        },
+                        error: function(response) {
+                            var errorMessage = response.responseJSON ? response.responseJSON.message : 'An error occurred';
+                            alert('Error: ' + errorMessage);
+                        }
+                    });
+                }
+            });
+
         });
     </script>
 @endsection

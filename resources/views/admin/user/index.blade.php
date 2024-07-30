@@ -3,10 +3,10 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            <h2>Manajemen User</h2>
             <div class="card">
-                <div class="d-flex justify-content-end p-4">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
+                <div class="d-flex justify-content-between p-4">
+                    <h2>Manajemen User</h2>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#userModal">
                         Tambah User
                     </button>
                 </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-success">Save changes</button>
                         </div>
                     </form>
                 </div>
