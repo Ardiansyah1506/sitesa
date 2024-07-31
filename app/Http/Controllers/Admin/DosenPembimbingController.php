@@ -62,7 +62,6 @@ class DosenPembimbingController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'password' => 'required|string|min:6',
         ]);
     
         $nip = $request->input('username');
@@ -88,7 +87,7 @@ class DosenPembimbingController extends Controller
                     'user_id' => $user->id
                 ]);
     
-                return response()->json(['message' => 'Akun berhasil dibuat dan status dosen diperbarui.']);
+                return response()->json(['succes' => 'Akun berhasil dibuat dan status dosen diperbarui.']);
             } else {
                 // Log jika dosen tidak ditemukan
                 Log::warning('Dosen tidak ditemukan.', ['nip' => $nip]);

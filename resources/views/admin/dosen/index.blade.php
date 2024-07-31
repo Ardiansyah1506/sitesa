@@ -108,19 +108,62 @@
                 };
 
                 $.ajax({
-                    url: "{{ route('admin.dosen.accDosen') }}", // Sesuaikan rute ini
-                    method: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        alert('Akun berhasil dibuat dan status dosen diperbarui');
-                        $('#passwordModal').modal('hide');
-                        $('#datatable').DataTable().ajax.reload(); // Reload data table
-                    },
-                    error: function(response) {
-                        alert('Gagal memperbarui data');
-                        console.log(response);
+    url: "{{ route('admin.dosen.accDosen') }}",
+    method: 'POST',
+    data: formData,
+    success: function(response) {
+        // Memastikan respons berisi pesan sukses yang dikirim dari server
+        if (response.succes) {
+            swal({
+                text: response.succes, // Menampilkan pesan sukses dari respons
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: true,
                     }
-                });
+                }
+            }).then(() => {
+                $('#passwordModal').modal('hide');
+                $('#datatable').DataTable().ajax.reload(); // Reload data table
+            });
+        } else {
+            swal({
+                text: "Terjadi kesalahan, silakan coba lagi.",
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        text: "OK",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: true,
+                    }
+                }
+            });
+        }
+    },
+    error: function(response) {
+        swal({
+            text: "Gagal memperbarui data",
+            icon: "error",
+            buttons: {
+                confirm: {
+                    text: "OK",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true,
+                }
+            }
+        });
+        console.log(response);
+    }
+});
+
             });
 
 

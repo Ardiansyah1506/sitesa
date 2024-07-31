@@ -53,7 +53,7 @@
 <li class="nav-item @if($active == 'Dosen Pembimbing') active @endif">
   <a
     data-bs-toggle="collapse"
-    href="#dashboard"
+    href="#dosen"
     class="collapsed"
     aria-expanded="false"
   >
@@ -61,7 +61,7 @@
     <p class="text-white">Dosen Pembimbing</p>
     <span class="caret"></span>
   </a>
-  <div class="collapse" id="dashboard">
+  <div class="collapse" id="dosen">
     <ul class="nav nav-collapse">
       <li class="nav-item @if($active == 'Dosen Pembimbing') active @endif">
         <a href="{{ route('admin.dosen.index') }}">
