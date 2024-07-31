@@ -1,6 +1,6 @@
 <li class="nav-item @if($active == 'admin-dashboard') active @endif">
   <a href="{{ route('admin.index') }}">
-    <i class="fas fa-home"></i>
+    <i class="fas fa-home text-dark"></i>
     <p>Dashboard</p>
   </a>
 </li>

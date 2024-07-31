@@ -1,5 +1,5 @@
 <div class="sidebar bg-sidebar">
-    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+    <div class="sidebar-wrapper scrollbar scrollbar-inner bg-sidebar">
       <div class="text-dark py-5 px-3 ">
           <a
             class="dropdown-toggle profile-pic text-center d-flex flex-column align-items-center justify-content-center"
@@ -14,12 +14,12 @@
                 class="avatar-img rounded-circle"
               />
             </div>
-            <span class="profile-username text-dark d-flex flex-column">
-              <span class="">{{ auth()->user()->username }}</span> 
+            <span class="profile-username text-dark d-flex flex-column text-white">
+              <span class="text-white">{{ auth()->user()->username }}</span> 
               @if(auth()->user()->role == 3 && auth()->user()->dosen)
-                 <span class="fw-bold">{{ auth()->user()->dosen->nama }}</span>
+                 <span class="fw-bold text-white">{{ auth()->user()->dosen->nama }}</span>
               @elseif(auth()->user()->role == 4 && auth()->user()->mahasiswa)
-                <span class="fw-bold">{{ auth()->user()->mahasiswa->nama }}</span>
+                <span class="fw-bold text-white">{{ auth()->user()->mahasiswa->nama }}</span>
               @endif
             </span>
           </a>
@@ -32,7 +32,7 @@
           </ul>
       </div>
       <div class="sidebar-content">
-        <ul class="nav nav-secondary">
+        <ul class="nav nav-secondary text-dark">
             @if (auth()->user()->role == 1)
               @include('layout.sidebar.sidebar-admin')
             @elseif (auth()->user()->role == 2)

@@ -3,12 +3,11 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            <h2>Pengajuan Dosen Pembimbing</h2>
             <div class="card">
                 <div class="card-body">
-                    <h3>List Dosen Pembimbing</h3>
+                    <h3>Pengajuan Dosen Pembimbing</h3>
                     <div class="table-responsive mt-3">
-                        <table class="table table-bordered dt-responsive" id="datatable">
+                        <table class="table table-bordered dt-responsive table-striped" id="datatable">
                             <thead>
                                 <tr>
                                     <th>No.</th>

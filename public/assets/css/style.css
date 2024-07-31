@@ -21,17 +21,65 @@
 
 .bg-cuy{
     background: rgb(255,255,255);
-background: -moz-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
-background: -webkit-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
-background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#00992a",GradientType=1);
+    background: -moz-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+    background: -webkit-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,153,42,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#00992a",GradientType=1);
 }
 
 .bg-main{
     height: auto;
-    background: rgb(255,255,255);
-    background: -moz-linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
-    background: -webkit-linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
-    background: linear-gradient(148deg, rgba(255,255,255,0.9239867822128851) 0%, rgba(0,191,52,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#00bf34",GradientType=1);
+    background: rgb(33,205,80);
+background: -moz-linear-gradient(126deg, rgba(33,205,80,1) 0%, rgba(101,163,93,1) 55%, rgba(0,89,24,1) 100%);
+background: -webkit-linear-gradient(126deg, rgba(33,205,80,1) 0%, rgba(101,163,93,1) 55%, rgba(0,89,24,1) 100%);
+background: linear-gradient(126deg, rgba(33,205,80,1) 0%, rgba(101,163,93,1) 55%, rgba(0,89,24,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#21cd50",endColorstr="#005918",GradientType=1);
+}
+
+.bg-sidebar{
+    background: rgb(2,164,46);
+background: -moz-linear-gradient(180deg, rgba(2,164,46,1) 0%, rgba(175,255,186,1) 30%, rgba(2,164,46,1) 100%);
+background: -webkit-linear-gradient(180deg, rgba(2,164,46,1) 0%, rgba(175,255,186,1) 30%, rgba(2,164,46,1) 100%);
+background: linear-gradient(180deg, rgba(2,164,46,1) 0%, rgba(175,255,186,1) 30%, rgba(2,164,46,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#02a42e",endColorstr="#02a42e",GradientType=1);
+}
+
+.bg-navbar{
+    background: rgb(2,164,46);
+background: -moz-radial-gradient(circle, rgba(2,164,46,1) 0%, rgba(95,219,111,1) 81%, rgba(2,164,46,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(2,164,46,1) 0%, rgba(95,219,111,1) 81%, rgba(2,164,46,1) 100%);
+background: radial-gradient(circle, rgba(2,164,46,1) 0%, rgba(95,219,111,1) 81%, rgba(2,164,46,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#02a42e",endColorstr="#02a42e",GradientType=1);
+}
+
+.pagination .page-link {
+    color: #fff; /* Warna teks */
+    background-color: #28a745; /* Warna background */
+    border-color: #28a745; /* Warna border */
+}
+
+.pagination .page-link:hover {
+    color: #fff; /* Warna teks saat di-hover */
+    background-color: #218838; /* Warna background saat di-hover */
+    border-color: #1e7e34; /* Warna border saat di-hover */
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff; /* Warna teks untuk tombol aktif */
+    background-color: #1e7e34; /* Warna background untuk tombol aktif */
+    border-color: #1e7e34; /* Warna border untuk tombol aktif */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #fff; /* Warna teks untuk tombol nonaktif */
+    background-color: #fff; /* Warna background untuk tombol nonaktif */
+    border-color: #dee2e6; /* Warna border untuk tombol nonaktif */
+}
+
+.active{
+    color:black;
+}
+
+.bg-card {
+    background-color: rgba(129, 213, 131, 0.575); /* Hitam dengan 50% transparansi */
 }
