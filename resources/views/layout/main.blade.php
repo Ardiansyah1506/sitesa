@@ -10,7 +10,7 @@
       @include('layout.sidebar')
       <!-- End Sidebar -->
 
-      <div class="main-panel bg-main">
+      <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
             <!-- Logo Header -->

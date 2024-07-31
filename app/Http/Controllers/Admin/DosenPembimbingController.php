@@ -25,6 +25,8 @@ class DosenPembimbingController extends Controller
         ];
         return view('admin.dosen.list', $data);
     }
+
+    
     public function getListDosen(){
         $data = Dosen::where('status', 1)->get(); // Mengambil data dari model Dosen
         return \DataTables::of($data)

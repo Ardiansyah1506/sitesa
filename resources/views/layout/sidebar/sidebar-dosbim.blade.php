@@ -13,7 +13,7 @@
         </li>
         <li class=" @if ($active == 'pengajuan') active @endif">
           <a href="{{ route('dosbim.pengajuan') }}">
-            <span class="sub-item">Pengajuan Bimbingan</span>
+            <span class="sub-item text-white">Pengajuan Bimbingan</span>
           </a>
         </li>
       </ul>
