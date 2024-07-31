@@ -63,6 +63,7 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('/dosen/get-data', 'getData')->name('dosen.getData');
         Route::get('/dosen/list', 'listDosen')->name('dosen.listDosen');
         Route::get('/dosen/getListDosen', 'getListDosen')->name('dosen.getListData');
+        Route::post('/dosen/accDosen', 'accDosen')->name('dosen.accDosen');
         // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
     });
 

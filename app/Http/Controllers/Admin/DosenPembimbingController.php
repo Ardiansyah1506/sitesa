@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\RefKuota;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class DosenPembimbingController extends Controller
@@ -26,7 +28,7 @@ class DosenPembimbingController extends Controller
         return view('admin.dosen.list', $data);
     }
 
-    
+
     public function getListDosen(){
         $data = Dosen::where('status', 1)->get(); // Mengambil data dari model Dosen
         return \DataTables::of($data)
@@ -56,7 +58,54 @@ class DosenPembimbingController extends Controller
             ->make(true);
     }
     
+    public function accDosen(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
     
+        $nip = $request->input('username');
+        $password = $request->input('password');
+    
+        try {
+            // Simpan data ke model User
+            $user = new User();
+            $user->username = $nip;
+            $user->password = bcrypt($password); // Enkripsi password
+            $user->role = 3; // Role untuk dosen
+            $user->save();
+    
+            // Perbarui status pada model Dosen
+            $dosen = Dosen::where('nip', $nip)->first();
+            if ($dosen) {
+                $dosen->status = 1; // Set status menjadi 1
+                $dosen->save();
+    
+                // Log aksi sukses
+                Log::info('Akun berhasil dibuat dan status dosen diperbarui.', [
+                    'nip' => $nip,
+                    'user_id' => $user->id
+                ]);
+    
+                return response()->json(['message' => 'Akun berhasil dibuat dan status dosen diperbarui.']);
+            } else {
+                // Log jika dosen tidak ditemukan
+                Log::warning('Dosen tidak ditemukan.', ['nip' => $nip]);
+    
+                return response()->json(['message' => 'Dosen tidak ditemukan.'], 404);
+            }
+        } catch (\Exception $e) {
+            // Log jika terjadi kesalahan
+            Log::error('Terjadi kesalahan saat membuat akun atau memperbarui status dosen.', [
+                'nip' => $nip,
+                'error' => $e->getMessage()
+            ]);
+    
+            return response()->json(['message' => 'Terjadi kesalahan, silakan coba lagi.'], 500);
+        }
+    }
+
 
 }
 
