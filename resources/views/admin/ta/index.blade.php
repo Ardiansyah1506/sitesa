@@ -18,7 +18,8 @@
                                     <th>Judul</th>
                                     <th>TA</th>
                                     <th>File</th>
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Daftar</th>
+                                    <th>Tanggal Sidang</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -50,7 +51,41 @@
                                 <!-- Options will be populated by JavaScript -->
                             </select>
                             <input type="hidden" id="tesis_id" name="tesis_id">
+                            <input type="hidden" id="mhs_nim" name="mhsNim">
+                            {{-- <input type="hidden" id="kode_ta" name="kode_ta"> --}}
                         </div>
+                        <div class="form-group">
+                            <label for="penguji-1">Penguji 1</label>
+                            <select class="form-control" id="penguji-1" name="penguji1" required>
+                                @foreach ($dosens as $dosen)
+                                    <option value="{{ $dosen->nip }}">{{ $dosen->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="penguji-2">Penguji 2</label>
+                            <select class="form-control" id="penguji-2" name="penguji2" required>
+                                @foreach ($dosens as $dosen)
+                                    <option value="{{ $dosen->nip }}">{{ $dosen->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="penguji-3">Penguji 3</label>
+                            <select class="form-control" id="penguji-3" name="penguji3" required>
+                                @foreach ($dosens as $dosen)
+                                    <option value="{{ $dosen->nip }}">{{ $dosen->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="penguji-4">Penguji 4</label>
+                            <select class="form-control" id="penguji-4" name="penguji4" required>
+                                @foreach ($dosens as $dosen)
+                                    <option value="{{ $dosen->nip }}">{{ $dosen->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -96,9 +131,14 @@
                         searchable: false
                     },
                     {
-                        data: 'tanggal',
-                        name: 'tanggal'
+                        data: 'tanggal_daftar',
+                        name: 'tanggal_daftar'
                     },
+                    {
+                        data: 'tanggal_sidang',
+                        name: 'tanggal_sidang'
+                    },
+                    
                     {
                         data: 'status',
                         name: 'status',
@@ -117,8 +157,13 @@
             // Event listener untuk tombol Acc
           // Event listener untuk tombol Acc
     $(document).on('click', '.acc-button', function() {
-        var id = $(this).data('id');
-        $('#tesis_id').val(id);
+        var idTesis = $(this).data('id');
+        var nim = $(this).data('another-id');
+        // var kode_ta = $(this).data('data-third-id');
+        $('#tesis_id').val(idTesis);
+        $('#mhs_nim').val(nim);
+        // $('#kode_ta').val(kode_ta);
+        // console.log('kode ta', kode_ta)
 
         // Mendapatkan tanggal sidang dari controller
         $.ajax({
@@ -143,7 +188,14 @@
             $('#accForm').on('submit', function(e) {
                 e.preventDefault();
                 var id = $('#tesis_id').val();
+                var mhsNim = $('#mhs_nim').val();
+                // var kodeTA = $('#kode_ta').val();
                 var tanggal_sidang = $('#tanggal_sidang').val();
+                var penguji1 = $('#penguji-1').val();
+                var penguji2 = $('#penguji-2').val();
+                // var penguji3 = $('#penguji-3').val();
+                // var penguji4 = $('#penguji-4').val();
+
 
                 $.ajax({
                     url: "{{ route('admin.ta.updatestatus') }}",
@@ -151,7 +203,12 @@
                     data: {
                         _token: '{{ csrf_token() }}',
                         id: id,
-                        tanggal_sidang: tanggal_sidang
+                        tanggal_sidang: tanggal_sidang,
+                        penguji1 : penguji1,
+                        penguji2 : penguji2,
+                        // penguji3 : penguji3,
+                        // penguji4 : penguji4,
+                        mhsNim : mhsNim,
                     },
                     success: function(response) {
                         $('#accModal').modal('hide');
@@ -168,7 +225,8 @@
             });
             $(document).on('click', '.selesai-button', function() {
                 var id = $(this).data('id');
-
+                var nim = $(this).data('another-id');
+                console.log(nim)
                 // Menampilkan konfirmasi
                 var confirmation = confirm("Apakah Anda yakin ingin menyelesaikan TA ini?");
 
@@ -179,7 +237,7 @@
                         method: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}',
-                            id: id,
+                            nim: nim,
                         },
                         success: function(response) {
                             table.ajax.reload();
