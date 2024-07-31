@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Mhs;
 
 use App\Models\TA;
+use App\Models\Dosen;
 use App\Models\Tesis;
 use App\Models\SidangTa;
 use App\Models\TanggalTA;
@@ -12,6 +13,7 @@ use App\Models\MahasiswaBimbingan;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TaController extends Controller
 {
@@ -56,12 +58,21 @@ class TaController extends Controller
         ->addIndexColumn()
         ->addColumn('nama', function($data) {
 
-            $nama = Tesis::where('nim', Auth::user()->username)->select('nama')->get();
-            return $nama;
+            $nama = Tesis::where('nim', Auth::user()->username)->select('nama')->first();
+            return $nama ? $nama->nama : 'Nama tidak ditemukan';
+            
         })
-        ->addColumn('Judul', function($data) {
+        ->addColumn('judul', function($data) {
             $judul = Tesis::where('nim', Auth::user()->username)->select('judul')->get();
             return $judul;
+        })
+        ->addColumn('penguji_1', function($data) {
+            $penguji = Dosen::where('nip', $data->nip_penguji_1)->select('nama')->first();
+            return $penguji ? $penguji->nama : 'Belum ada penguji';
+        })
+        ->addColumn('penguji_2', function($data) {
+            $penguji = Dosen::where('nip', $data->nip_penguji_2)->select('nama')->first();
+            return $penguji ? $penguji->nama : 'Belum ada penguji';
         })
         ->editColumn('status', function($data) {
             $sidang = SidangTa::where('nim', $data->nim)->first();
@@ -80,46 +91,62 @@ class TaController extends Controller
                 }
             }
         })
-        ->rawColumns(['status','judul','nama'])
+        ->rawColumns(['status','judul','nama','penguji_1','penguji_2'])
         ->make(true);
 }
 
 public function createPengajuan(Request $request){
     try {
+        // Validasi input
+        $request->validate([
+            'kategori' => 'required',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:10240', // contoh validasi file
+        ]);
+
         // Mendapatkan input dari request
         $kategori_sidang = $request->input('kategori');
         $file = $request->file('file'); // Mendapatkan file yang diunggah
         $nim = Auth::user()->username;
 
-        // Menyusun path penyimpanan
-        $folder = 'public/ta_' . $kategori_sidang;
-        $filename = $nim . '_ta_' . $kategori_sidang . '.' . $file->getClientOriginalExtension();
+        // Pastikan file ada sebelum mencoba untuk mendapatkan extension
+        if ($file) {
+            // Menyusun path penyimpanan
+            $folder = 'public/ta_' . $kategori_sidang;
+            $filename = $nim . '_ta_' . $kategori_sidang . '.' . $file->getClientOriginalExtension();
 
-        // Simpan file dalam storage/public/ta_kategori/{nim_ta_kategori}
-        $file->storeAs($folder, $filename);
+            // Memastikan direktori penyimpanan ada
+            if (!Storage::exists($folder)) {
+                Storage::makeDirectory($folder);
+            }
 
-        // Menyusun data yang akan disimpan
-        $data = [
-            'nim' => $nim,
-            'kategori_ta' => $kategori_sidang,
-            'nama_file' => $filename, // Menyimpan nama file yang diunggah
-            'tanggal_daftar' => now()->format('Y-m-d'), // Menyimpan hanya tanggal tanpa jam
-            'tanggal_sidang' => null, // Placeholder, diisi nanti
-            'penguji_1' => '-', // Placeholder, diisi nanti
-            'penguji_2' => '-', // Placeholder, diisi nanti
-            'status' => 0,
-        ];
+            // Simpan file dalam storage/public/ta_kategori/{nim_ta_kategori}
+            $file->storeAs($folder, $filename);
 
-        // Membuat pengajuan TA baru
-        SidangTa::create($data);
+            // Menyusun data yang akan disimpan
+            $data = [
+                'nim' => $nim,
+                'kategori_ta' => $kategori_sidang,
+                'nama_file' => $filename, // Menyimpan nama file yang diunggah
+                'tanggal_daftar' => now()->format('Y-m-d'), // Menyimpan hanya tanggal tanpa jam
+                'tanggal_sidang' => null, // Placeholder, diisi nanti
+                'penguji_1' => '-', // Placeholder, diisi nanti
+                'penguji_2' => '-', // Placeholder, diisi nanti
+                'status' => 0,
+            ];
 
-        // Logging informasi pengajuan yang berhasil
-        Log::info('Pengajuan TA berhasil diajukan.', [
-            'nim' => $data['nim'],
-            'kategori_sidang' => $data['kategori_ta']
-        ]);
+            // Membuat pengajuan TA baru
+            SidangTa::create($data);
 
-        return response()->json(['message' => 'Pengajuan TA berhasil diajukan.'], 200);
+            // Logging informasi pengajuan yang berhasil
+            Log::info('Pengajuan TA berhasil diajukan.', [
+                'nim' => $data['nim'],
+                'kategori_sidang' => $data['kategori_ta']
+            ]);
+
+            return response()->json(['message' => 'Pengajuan TA berhasil diajukan.'], 200);
+        } else {
+            return response()->json(['message' => 'File tidak ditemukan.'], 400);
+        }
     } catch (\Exception $e) {
         // Logging jika terjadi kesalahan
         Log::error('Gagal membuat pengajuan TA.', [
@@ -130,5 +157,6 @@ public function createPengajuan(Request $request){
         return response()->json(['message' => 'Terjadi kesalahan saat mengajukan TA. Silakan coba lagi.'], 500);
     }
 }
+
 
 }

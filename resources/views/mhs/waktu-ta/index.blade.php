@@ -46,16 +46,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="formKategoriTA">
+                <form id="formKategoriTA" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="kategori" class="form-label">Kategori TA</label>
                         <select class="form-select" id="kategori" name="kategori" required>
                             <option value="" disabled selected>Pilih Kategori</option>
-                            <option value="1">Kategori 1</option>
-                            <option value="2">Kategori 2</option>
+                            <option value="1">Sidang Proposal</option>
+                            <option value="2">Sidang Tesis</option>
                         </select>
-                        <input type="text" class="form-control" id="file" name="file" required>
+                        <input type="file" class="form-control" id="file" name="file" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
@@ -96,41 +96,45 @@ $(document).ready(function() {
 
     // Form submit untuk memilih kategori TA
     $('#formKategoriTA').on('submit', function(e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
+    e.preventDefault();
 
-        $.ajax({
-            url: "{{ route('mhs.ta.createPengajuan') }}",
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response.message) {
-                    $('#kategoriTAModal').modal('hide');
-                    table.ajax.reload();
+    var formData = new FormData(this); // Gunakan FormData
 
-                    // Tampilkan SweetAlert untuk pesan sukses
-                    swal({
-                        text: response.message,
-                        icon: "success",
-                        buttons: {
-                            confirm: {
-                                text: "OK",
-                                value: true,
-                                visible: true,
-                                className: "btn btn-success",
-                                closeModal: true,
-                            },
+    $.ajax({
+        url: "{{ route('mhs.ta.createPengajuan') }}",
+        method: 'POST',
+        data: formData,
+        processData: false, // Jangan proses data
+        contentType: false, // Jangan tentukan tipe konten
+        success: function(response) {
+            if (response.message) {
+                $('#kategoriTAModal').modal('hide');
+                table.ajax.reload();
+
+                // Tampilkan SweetAlert untuk pesan sukses
+                swal({
+                    text: response.message,
+                    icon: "success",
+                    buttons: {
+                        confirm: {
+                            text: "OK",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-success",
+                            closeModal: true,
                         },
-                    });
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+                    },
+                });
+            } else {
+                alert(response.message);
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            alert('Terjadi kesalahan. Silakan coba lagi.');
+        }
     });
+});
+
 });
 </script>
 @endsection

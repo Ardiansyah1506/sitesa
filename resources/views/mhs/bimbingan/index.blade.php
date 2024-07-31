@@ -150,36 +150,6 @@
             </div>
         </div>
         @endif
-
-        @if($showBab6)
-        <!-- Bab 6 -->
-        <div class="card mt-5">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h2>Bab 6</h2>
-        @if(!$showBab6)
-                   
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#bab6Modal">Upload File</button>
-                @endif
-                </div>
-                <div class="table-responsive mt-3">
-                    <table class="table table-bordered dt-responsive" id="datatable6">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>NIP</th>
-                                <th>Nama</th>
-                                <th>Catatan</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        @endif
     </div>
 </div>
 
@@ -294,26 +264,6 @@ $(document).ready(function() {
     });
     @endif
 
-    @if($showBab6)
-    $('#datatable6').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('mhs.bimbingan.getDataBimbingan', 6) }}",
-        columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-            { data: 'nip', name: 'nip' },
-            { data: 'nama_pembimbing', name: 'nama_pembimbing' },
-            { data: 'catatan', name: 'catatan' },
-            { data: 'status', name: 'status' },
-        ],
-        language: {
-            emptyTable: "Anda Belum Upload File Materi Bab"
-        },
-        paging: false,
-        searching: false,
-        lengthChange: false
-    });
-    @endif
 
     // Handle form submissions for uploads
     function handleUploadForm(formId, modalId, datatableId, route) {

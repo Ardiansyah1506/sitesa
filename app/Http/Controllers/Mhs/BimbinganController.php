@@ -5,6 +5,7 @@ use App\Models\Bab;
 use App\Models\Bimbingan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use App\Models\MahasiswaBimbingan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -64,6 +65,7 @@ class BimbinganController extends Controller
                 ->select('nim', 'nip', 'status', 'id_kategori') // Select appropriate columns
                 ->groupBy('nim', 'nip', 'status', 'id_kategori') // Group by these columns to avoid issues
                 ->get();
+
     
             if ($data->isEmpty()) {
                 return response()->json([
@@ -77,7 +79,7 @@ class BimbinganController extends Controller
             return \DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('nama_pembimbing', function ($row) {
-                    $data = MahasiswaBimbingan::where('nip', $row->nip)->pluck('nama')->first();
+                    $data = Dosen::where('nip', $row->nip)->pluck('nama')->first();
                     return $data;
                 })
                 ->editColumn('catatan', function ($row) {

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Dosbim;
 
-use Illuminate\Http\Request;
 use App\Models\Bimbingan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
 {
@@ -26,13 +27,13 @@ class PengajuanController extends Controller
 
     public function getData()
     {
-        $user = auth()->user();
+        $user = Auth::user()->username;
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
         
         $data = DB::table('mhs_bimbingan_ta as bimbingan')
-            ->where('bimbingan.nip', $user->username)
+            ->where('bimbingan.nip', $user)
             ->where('bimbingan.status', 0)
             ->join('tesis', 'bimbingan.nim', '=', 'tesis.nim')
             ->where('tesis.status', 1)
@@ -44,7 +45,6 @@ class PengajuanController extends Controller
                 'tesis.abstrak',
             ])
             ->get();
-
         return \DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('actions', function ($data) {

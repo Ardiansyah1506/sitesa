@@ -9,6 +9,7 @@ use App\Models\Tesis;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SidangTa;
 
 class DashboardController extends Controller
 {
@@ -22,7 +23,7 @@ class DashboardController extends Controller
         $dosen = Dosen::count();
         $dosbim = Dosen::where('status', '1')->count();
         $progdi = User::where('role', '2')->count();
-        $ta = TA::count();
+        $ta = SidangTa::count();
         $judul = Tesis::count();
         return view('admin.index', compact('mhs', 'dosen', 'dosbim', 'ta', 'judul','progdi', 'active', 'title'));
     }

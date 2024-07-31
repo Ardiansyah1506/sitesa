@@ -22,3 +22,9 @@
       <p class="text-white">Sidang TA</p>
     </a>
 </li>
+<li class="nav-item @if ($active == 'Akademik') active @endif">
+    <a href="{{ route('index-surat') }}">
+      <i class="icon-user-following"></i>
+      <p class="text-white">Informasi Akademik</p>
+    </a>
+</li>

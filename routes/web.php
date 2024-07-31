@@ -14,7 +14,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/mhs', [MahasiswaController::class, 'import'])->name('import');
 Route::get('/mhs', [MahasiswaController::class, 'showImportForm'])->name('ppp');
 Route::get('/lembar', [DokumenController::class, 'lembarproposal'])->name('ppssp');
-Route::get('/lembarProposalPdf', [DokumenController::class, 'generatePDF'])->name('ssas');
+// Route::get('/lembarProposalPdf', [DokumenController::class, 'generatePDF'])->name('ssas');
 Route::get('/surat', [SuratController::class, 'index'])->name('index-surat');
 
 Route::middleware(['auth'])->group(function () {
