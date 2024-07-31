@@ -33,7 +33,7 @@ class TaController extends Controller
         } elseif ($tesis->status != 1) {
             // Tesis ada tapi belum di-ACC admin
             $canSubmitTA = false;
-            $message = 'Judul belum di-ACC admin';
+            $message = 'Judul belum di-ACC oleh prodi';
         }
     
         $data = [
