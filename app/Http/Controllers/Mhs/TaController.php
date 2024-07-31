@@ -108,7 +108,7 @@ public function createPengajuan(Request $request){
         // Logging informasi pengajuan yang berhasil
         Log::info('Pengajuan TA berhasil diajukan.', [
             'nim' => $data['nim'],
-            'kategori_sidang' => $data['kode_ta']
+            'kategori_sidang' => $data['kategori_ta']
         ]);
 
         return response()->json(['message' => 'Pengajuan TA berhasil diajukan.'], 200);
