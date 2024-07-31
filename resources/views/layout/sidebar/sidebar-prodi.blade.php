@@ -1,26 +1,26 @@
 <li class="nav-item @if ($active == "dashboard") active @endif">
     <a href="{{ route('prodi.index') }}">
       <i class="fas fa-home"></i>
-      <p>Dashboard</p>
+      <p class="text-white">Dashboard</p>
     </a>
   </li>
 
   <li class="nav-item @if ($active == "pengajuan-prodi" || $active == "bimbingan-langsung") active @endif">
     <a data-bs-toggle="collapse" href="#bimbingan">
       <i class="icon-people"></i>
-      <p>Bimbingan</p>
+      <p class="text-white">Bimbingan</p>
       <span class="caret"></span>
     </a>
     <div class="collapse" id="bimbingan">
       <ul class="nav nav-collapse">
         <li class="@if ($active == "pengajuan-prodi") active @endif">
           <a href="{{ route('prodi.pengajuan') }}">
-            <span class="sub-item">Pengajuan Pembimbing</span>
+            <span class="sub-item text-white">Pengajuan Pembimbing</span>
           </a>
         </li>
         <li class="@if ($active == "bimbingan-langsung") active @endif">
           <a href="{{ route('prodi.bimbingan') }}">
-            <span class="sub-item">Sedang Bimbingan</span>
+            <span class="sub-item text-white">Sedang Bimbingan</span>
           </a>
         </li>
       </ul>
@@ -30,20 +30,20 @@
   <li class="nav-item @if ($active == "waktu-ta") active @endif">
     <a href="{{ route('prodi.waktu-ta') }}">
       <i class="icon-hourglass"></i>
-      <p>Waktu TA</p>
+      <p class="text-white">Waktu TA</p>
     </a>
   </li>
 
   <li class="nav-item @if ($active == "kuota-pembimbing") active @endif">
     <a href="{{ route('prodi.kuota-pembimbing') }}">
       <i class="icon-calculator"></i>
-      <p>Kuota Pembimbing</p>
+      <p class="text-white">Kuota Pembimbing</p>
     </a>
   </li>
 
   <li class="nav-item @if ($active == "Dosen") active @endif">
     <a href="{{ route('prodi.dosen.index') }}">
       <i class="icon-user-following"></i>
-      <p>Dosen Pembimbing</p>
+      <p class="text-white">Dosen Pembimbing</p>
     </a>
   </li>

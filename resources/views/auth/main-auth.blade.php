@@ -5,6 +5,7 @@
   @yield('css-library')
   @yield('css-custom')
   <body>
+    @include('layout.navbar')
     <div class="wrapper d-flex justify-content-center align-items-center bg-cuy">
         <div class="container">
           <div class="page-inner">

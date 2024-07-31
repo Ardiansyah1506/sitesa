@@ -63,13 +63,13 @@
   </a>
   <div class="collapse" id="dosen">
     <ul class="nav nav-collapse">
-      <li class="nav-item @if($active == 'Dosen Pembimbing') active @endif">
+      <li class="nav-item @if($active == 'admin-pengajuan-pembimbing') active @endif">
         <a href="{{ route('admin.dosen.index') }}">
           <i class="icon-people"></i>
           <p class="text-white">Pengajuan</p>
         </a>
       </li>
-      <li class="nav-item @if($active == 'Dosen Pembimbing') active @endif">
+      <li class="nav-item @if($active == 'list-dosen') active @endif">
         <a href="{{ route('admin.dosen.listDosen') }}">
           <i class="icon-arrow-up-circle"></i>
           <p class="text-white">List</p>

@@ -37,17 +37,19 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#21cd50",endCo
 }
 
 .bg-sidebar{
-    background: rgb(255,255,255);
-    background: -moz-radial-gradient(circle, rgb(16, 90, 1) 0%,  rgb(49, 82, 42) 100%);
-    background: -webkit-radial-gradient(circle, rgb(27, 51, 22) 0%,  rgb(49, 82, 42) 100%);
-    background: radial-gradient(circle, rgb(16, 90, 1) 0%, rgb(49, 82, 42) 100%);
+    background: rgb(7,87,29);
+background: -moz-linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+background: -webkit-linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+background: linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#07571d",endColorstr="#02a42e",GradientType=1);
 }
 
 .bg-navbar{
-    background: rgb(255,255,255);
-    background: -moz-radial-gradient(circle, rgb(16, 90, 1) 0%,  rgb(49, 82, 42) 100%);
-    background: -webkit-radial-gradient(circle, rgb(27, 51, 22) 0%,  rgb(49, 82, 42) 100%);
-    background: radial-gradient(circle, rgb(16, 90, 1) 0%, rgb(49, 82, 42) 100%);
+    background: rgb(7,87,29);
+    background: -moz-linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+    background: linear-gradient(180deg, rgba(7,87,29,1) 0%, rgba(2,164,46,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#07571d",endColorstr="#02a42e",GradientType=1);
 }
 
 .pagination .page-link {

@@ -20,7 +20,7 @@
                     <label class="form-label" for="password">Password</label>
                 </div>
                 @error('username')
-                  <p class="form-text text-muted text-danger" >{{ $message }}</p>
+                  <p class="form-text text-muted text-danger">{{ $message }}</p>
                 @enderror
                 <button data-mdb-button-init data-mdb-ripple-init class="btn btn-success btn-lg btn-block" type="submit">Login</button>
             </form>

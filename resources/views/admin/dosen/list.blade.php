@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                    <h2>Dosen Pembimbing</h2>
+                    <h2 class="p-4">List Dosen Pembimbing</h2>
                 <div class="card-body">
                  
                     <div class="table-responsive">

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-header border-none bg-navbar navbar-expand-lg">
+<nav class="navbar navbar-header px-3 border-none bg-navbar navbar-expand-lg">
     <div class="container-fluid">
       <nav
         class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"

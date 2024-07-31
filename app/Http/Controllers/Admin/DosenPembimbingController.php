@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 class DosenPembimbingController extends Controller
 {
     protected $title = 'Pengajuan Dosen Pembimbing';
-    protected $active = 'Dosen Pembimbing';
+    protected $active = 'admin-pengajuan-pembimbing';
     public function index(){
         $data = [
             'title'=> $this->title,
@@ -23,7 +23,7 @@ class DosenPembimbingController extends Controller
     public function listDosen(){
         $data = [
             'title'=> $this->title,
-            'active'=> $this->active,
+            'active'=> 'list-dosen',
         ];
         return view('admin.dosen.list', $data);
     }
