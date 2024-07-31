@@ -47,3 +47,10 @@
       <p class="text-white">Dosen Pembimbing</p>
     </a>
   </li>
+
+  <li class="nav-item @if ($active == "tesis") active @endif">
+    <a href="{{ route('prodi.verif-tesis.index') }}">
+      <i class="icon-user-following"></i>
+      <p class="text-white">Tesis</p>
+    </a>
+  </li>

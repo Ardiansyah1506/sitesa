@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Prodi\DashboardController;
-use App\Http\Controllers\Prodi\SetWaktuTAController;
-use App\Http\Controllers\Prodi\BimbinganController;
 use App\Http\Controllers\Prodi\DosenController;
-use App\Http\Controllers\Prodi\KuotaPembimbingController;
+use App\Http\Controllers\Prodi\BimbinganController;
+use App\Http\Controllers\Prodi\DashboardController;
 use App\Http\Controllers\Prodi\PengajuanController;
+use App\Http\Controllers\Prodi\SetWaktuTAController;
+use App\Http\Controllers\Prodi\VerifTesisController;
+use App\Http\Controllers\Prodi\KuotaPembimbingController;
 
 Route::prefix('prodi')->name('prodi.')->group(function() {
 
@@ -48,6 +49,11 @@ Route::controller(DosenController::class)->group(function() {
     Route::get('/dosen/get-data', 'getData')->name('dosen.getDataKuota');
     Route::get('/dosen/edit/{id?}', 'edit')->name('dosen.edit-dosen');
     Route::post('/dosen/update', 'store')->name('dosen.updateKuotaPembimbing');
+});
+Route::controller(VerifTesisController::class)->group(function() {
+    Route::get('/verif-tesis', 'index')->name('verif-tesis.index');
+    Route::get('/verif-tesis/data', 'getData')->name('verif-tesis.getData');
+    Route::put('/verif-tesis/acc/{id}', 'accTesis')->name('verif-tesis.acc');
 });
 
 
