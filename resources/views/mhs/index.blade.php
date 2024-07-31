@@ -11,7 +11,7 @@
                         Tambah Tesis
                     </button>
                     <div class="table-responsive mt-3">
-                        <table class="table table-bordered dt-responsive" id="datatable">
+                        <table class="table table-bordered dt-responsive table-striped" id="datatable">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -20,7 +20,8 @@
                                     <th>Abstrak</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="bg-transparent">
+                                
                             </tbody>
                         </table>
                     </div>

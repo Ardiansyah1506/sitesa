@@ -3,12 +3,11 @@
 @section('content')
     <div class="row">
         <div class="col-sm-12">
-            <h2>Dosen</h2>
             <div class="card">
                 <div class="card-body">
                     <h3>List Dosen</h3>
                     <div class="table-responsive mt-3">
-                        <table class="table table-bordered dt-responsive" id="datatable">
+                        <table class="table table-bordered table-striped dt-responsive" id="datatable">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -31,26 +30,25 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="accModalLabel">Upload File</h5>
+                    <h5 class="modal-title" id="accModalLabel">Atur Pembimbing</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="FormModal" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <div class="modal-body">
-                      <div class="form-group">
-                          <label for="kuota">Kuota</label>
-                          <input type="text" id="kuota" name="kuota">
-                          <input type="hidden" id="nip" name="nip">
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Save changes</button>
-                  </div>
-              </form>
-              
+                <form id="FormModal" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="kuota">Kapasitas / Kuota pembimbing</label>
+                            <input type="text" id="kuota" name="kuota" class="form-control" required>
+                            <input type="hidden" id="nip" name="nip">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -3,8 +3,6 @@
 @section('content')
 <div class="row">
     <div class="col-sm-12">
-        <h3>Bimbingan {{ Auth::user()->username }}</h3>
-
         <!-- Bab 1 -->
         <div class="card">
             <div class="card-body">
@@ -16,7 +14,7 @@
                 @endif
                 </div>
                 <div class="table-responsive mt-3">
-                    <table class="table table-bordered dt-responsive" id="datatable1">
+                    <table class="table table-bordered dt-responsive table-striped" id="datatable1">
                         <thead>
                             <tr>
                                 <th>No.</th>

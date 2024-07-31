@@ -13,6 +13,7 @@
 
     <!-- Fonts and icons -->
     <script src="{{ url('') }}/assets/js/plugin/webfont/webfont.min.js"></script>
+    
   
     <script>
       WebFont.load({
@@ -36,6 +37,8 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/kaiadmin.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url('') }}/assets/css/style.css" />
+    <link rel="stylesheet" href="{{ url('') }}/assets/css/styles.css" />
 
   </head>
