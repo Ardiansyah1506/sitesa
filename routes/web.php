@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\Mhs\DokumenController;
+use App\Http\Controllers\SuratController;
 
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -14,6 +15,7 @@ Route::post('/mhs', [MahasiswaController::class, 'import'])->name('import');
 Route::get('/mhs', [MahasiswaController::class, 'showImportForm'])->name('ppp');
 Route::get('/lembar', [DokumenController::class, 'lembarproposal'])->name('ppssp');
 Route::get('/lembarProposalPdf', [DokumenController::class, 'generatePDF'])->name('ssas');
+Route::get('/surat', [SuratController::class, 'index'])->name('index-surat');
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['roleAccess:1'])->group(function () {

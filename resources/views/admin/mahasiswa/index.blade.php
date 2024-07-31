@@ -8,7 +8,7 @@
       <div class="card">
         <div class="p-4">
           <h4 class="card-title">Daftar Mahasiswa</h4>
-          <button class="btn btn-primary btn-sm tambah-mhs">Tambah Mahasiswa</button>                     
+          <button class="btn btn-success btn-sm tambah-mhs">Tambah Mahasiswa</button>                     
         </div>
         <div class="card-body">
           <div class="table-responsive">
