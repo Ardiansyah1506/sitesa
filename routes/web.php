@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\SuratController;
 
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
@@ -11,6 +12,7 @@ Route::post('/process-login', [AuthController::class, 'login'])->name('process-l
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/mhs', [MahasiswaController::class, 'import'])->name('import');
 Route::get('/mhs', [MahasiswaController::class, 'showImportForm'])->name('ppp');
+Route::get('/surat', [SuratController::class, 'index'])->name('index-surat');
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['roleAccess:1'])->group(function () {
