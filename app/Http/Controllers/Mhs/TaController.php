@@ -66,7 +66,7 @@ class TaController extends Controller
         ->editColumn('status', function($data) {
             $sidang = SidangTa::where('nim', $data->nim)->first();
             if (!$sidang) {
-                return '<button class="btn btn-warning btn-modal" data-target="#uploadModal" data-id="'.$kategori_sidang_counter.'">Ajukan</button>';
+                return '<button class="btn btn-warning btn-modal" data-target="#uploadModal" data-id="'.$data->nim.'">Ajukan</button>';
             } else {
                 switch ($sidang->status) {
                     case 0:
@@ -88,13 +88,21 @@ public function createPengajuan(Request $request){
     try {
         // Mendapatkan input dari request
         $kategori_sidang = $request->input('kategori');
+        $file = $request->file('file'); // Mendapatkan file yang diunggah
         $nim = Auth::user()->username;
+
+        // Menyusun path penyimpanan
+        $folder = 'public/ta_' . $kategori_sidang;
+        $filename = $nim . '_ta_' . $kategori_sidang . '.' . $file->getClientOriginalExtension();
+
+        // Simpan file dalam storage/public/ta_kategori/{nim_ta_kategori}
+        $file->storeAs($folder, $filename);
 
         // Menyusun data yang akan disimpan
         $data = [
             'nim' => $nim,
             'kategori_ta' => $kategori_sidang,
-            'nama_file' => '-', // Default or placeholder
+            'nama_file' => $filename, // Menyimpan nama file yang diunggah
             'tanggal_daftar' => now()->format('Y-m-d'), // Menyimpan hanya tanggal tanpa jam
             'tanggal_sidang' => null, // Placeholder, diisi nanti
             'penguji_1' => '-', // Placeholder, diisi nanti
@@ -122,4 +130,5 @@ public function createPengajuan(Request $request){
         return response()->json(['message' => 'Terjadi kesalahan saat mengajukan TA. Silakan coba lagi.'], 500);
     }
 }
+
 }

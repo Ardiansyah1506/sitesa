@@ -55,6 +55,7 @@
                             <option value="1">Kategori 1</option>
                             <option value="2">Kategori 2</option>
                         </select>
+                        <input type="text" class="form-control" id="file" name="file" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
