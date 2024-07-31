@@ -8,14 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    private $title = 'Login';
     public function showLoginForm()
     {
-        $data = [
-            'title' => $this->title,
-        ];
-        
-        return view('auth.login', $data);
+        return redirect()->route('home');
     }
 
     public function login(Request $request)

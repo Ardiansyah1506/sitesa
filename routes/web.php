@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MahasiswaController;
 
-Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/process-login', [AuthController::class, 'login'])->name('process-login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/mhs', [MahasiswaController::class, 'import'])->name('import');
