@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Dosbim;
 
 use App\Models\Bab;
 use App\Models\Tesis;
+use App\Models\SidangTa;
 use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+use function PHPUnit\Framework\isEmpty;
 
 class BimbinganController extends Controller
 {
@@ -32,39 +35,61 @@ class BimbinganController extends Controller
         if (!$user) {
             return response()->json(['error' => 'User not authenticated'], 401);
         }
-        
+    
         $data = DB::table('mhs_bimbingan_ta as bimbingan')
             ->join('tesis', 'tesis.nim', '=', 'bimbingan.nim')
             ->where('bimbingan.nip', $user->username)
             ->where('bimbingan.status', 1)
             ->select([
-                'bimbingan.nim', 
+                'bimbingan.nim',
                 'bimbingan.nama',
-                'bimbingan.ta_1', 
-                'bimbingan.ta_2', 
-                'bimbingan.no_hp', 
+                'bimbingan.ta_1',
+                'bimbingan.ta_2',
+                'bimbingan.no_hp',
                 'bimbingan.email',
                 'tesis.judul'
             ])->get();
-
+    
         return \DataTables::of($data)
             ->addIndexColumn()
             ->editColumn('ta_1', function ($row) {
-                switch ($row->ta_1) {
+                $simpro = SidangTa::where('nim', '=', $row->nim)
+                    ->where('kategori_ta', '1')
+                    ->select('status')
+                    ->first();
+    
+                if (!$simpro) {
+                    return '<span class="badge badge-warning">Belum</span>';
+                }
+    
+                switch ($simpro->status) {
                     case 0:
-                        return '<span class="badge badge-warning">Belum</span>';
+                        return '<span class="badge badge-warning">Pengajuan Sidang</span>';
                     case 1:
-                        return 'Lulus';
+                        return 'Selesai';
+                    case 2:
+                        return 'Sidang';
                     default:
                         return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
                 }
             })
             ->editColumn('ta_2', function ($row) {
-                switch ($row->ta_2) {
+                $simpro = SidangTa::where('nim', '=', $row->nim)
+                    ->where('kategori_ta', '2')
+                    ->select('status')
+                    ->first();
+    
+                if (!$simpro) {
+                    return '<span class="badge badge-warning">Belum</span>';
+                }
+    
+                switch ($simpro->status) {
                     case 0:
-                        return '<span class="badge badge-warning">Belum</span>';
+                        return '<span class="badge badge-warning">Pengajuan Sidang</span>';
                     case 1:
-                        return 'Lulus';
+                        return 'Selesai';
+                    case 2:
+                        return 'Sidang';
                     default:
                         return '<span class="badge rounded-pill bg-danger">Status Tidak Diketahui</span>';
                 }
@@ -77,6 +102,7 @@ class BimbinganController extends Controller
             ->rawColumns(['ta_1', 'ta_2', 'actions'])
             ->make(true);
     }
+    
     
     public function detail($nim = NULL)
     {

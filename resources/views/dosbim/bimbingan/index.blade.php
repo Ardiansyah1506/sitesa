@@ -21,8 +21,8 @@
                   <th>Nim</th>
                   <th>Nama</th>
                   <th>Judul</th>
-                  <th>TA 1</th>
-                  <th>TA 2</th>
+                  <th>Sidang Proposal</th>
+                  <th>Sidang Tesis</th>
                   <th>No Hp</th>
                   <th>Email</th>
                   <th>Aksi</th>

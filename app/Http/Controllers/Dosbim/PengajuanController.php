@@ -35,7 +35,7 @@ class PengajuanController extends Controller
             ->where('bimbingan.nip', $user->username)
             ->where('bimbingan.status', 0)
             ->join('tesis', 'bimbingan.nim', '=', 'tesis.nim')
-            ->where('tesis.status', 0)
+            ->where('tesis.status', 1)
             ->select([
                 'bimbingan.id',
                 'bimbingan.nim',

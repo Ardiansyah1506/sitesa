@@ -62,22 +62,51 @@ class MahasiswaController extends Controller
 
                 // Buat array data untuk validasi dan pengisian otomatis
                 $data = [
-                    'kode_prodi' => '-',
-                    'nidn' => $row[0]??'-',
-                    'nip' =>  $row[1]??'-', // Ganti nilai prodi dengan nama prodi yang sesuai atau fallback ke nilai asli
-                    'nama' =>  $row[2]??'-', // Mengisi jenis kelamin dengan nilai default 'L'
-                    'jk' =>  $row[3]??'-',
-                    'email' => $row[4]?? 'dummy@email.com',
-                    'no_hp' =>  $row[5]??000,
-                    'alamat' => $row[6]??'-',
-                    'tempat_lahir' =>  $row[7]??'-', // Mengisi tempat lahir dengan 'Semarang'
-                    'tanggal_lahir' => $row[8]??'1956-12-24',
+                    // 'kode_prodi' => '-',
+                    'nim' => $row[2]??'-',
+                    'nama' =>  $row[1]??'-', // Mengisi jenis kelamin dengan nilai default 'L'
+                    'jk' =>  'L',
+                    'prodi' => '-',
+                    'email' => $email_dummy,
+                    'no_hp' => $no_hp_dummy,
+                    'alamat' => '-',
+                    'tempat_lahir' =>'-', // Mengisi tempat lahir dengan 'Semarang'
+                    'tanggal_lahir' =>'1999-12-24',
                     'status' => 0, // Mengisi status dengan nilai default 0
                 ];
 
               
+                // $data = [
+                //     'kode_prodi' => '-',
+                //     'nidn' => '-',
+                //     'nip' =>  $row[2]??'-', // Ganti nilai prodi dengan nama prodi yang sesuai atau fallback ke nilai asli
+                //     'nama' =>  $row[1]??'-', // Mengisi jenis kelamin dengan nilai default 'L'
+                //     'jk' =>  '-',
+                //     'email' => 'dummy@email.com',
+                //     'no_hp' => $no_hp_dummy,
+                //     'alamat' => '-',
+                //     'tempat_lahir' => '-', // Mengisi tempat lahir dengan 'Semarang'
+                //     'tanggal_lahir' => '1956-12-24',
+                //     'status' => 0, // Mengisi status dengan nilai default 0
+                // ];
+
+               
                 // Buat data mahasiswa baru jika validasi berhasil
-                Dosen::create($data);
+                // Menyimpan data ke model Dosen (misalnya)
+$mhs = Mahasiswa::create($data);
+
+// Membuat entri di RefSks dan RefPembayaran jika data Dosen berhasil disimpan
+if ($mhs) {
+    RefSks::create([
+        'nim' => $mhs->nim, // Gunakan NIP sebagai pengganti NIM jika relevan
+        'jumlah' => '0' // Mengisi jumlah SKS default
+    ]);
+
+    RefPembayaran::create([
+        'nim' => $mhs->nim, // Gunakan NIP sebagai pengganti NIM jika relevan
+        'status' => '0' // Status pembayaran default
+    ]);
+}
 
                 // Buat entri baru di tabel ref_sks
                
