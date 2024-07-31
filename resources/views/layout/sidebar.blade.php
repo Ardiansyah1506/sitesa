@@ -1,36 +1,10 @@
 <div class="sidebar bg-sidebar">
     <div class="sidebar-wrapper scrollbar scrollbar-inner bg-sidebar">
-      <div class="text-dark py-5 px-3 ">
-          <a
-            class="dropdown-toggle profile-pic text-center d-flex flex-column align-items-center justify-content-center"
-            data-bs-toggle="dropdown"
-            href="#"
-            aria-expanded="false"
-          >
-            <div class="avatar-sm">
-              <img
-                src="{{ asset('assets/img/default-profile.jpg') }}"
-                alt="..."
-                class="avatar-img rounded-circle"
-              />
-            </div>
-            <span class="profile-username text-dark d-flex flex-column text-white">
-              <span class="text-white">{{ auth()->user()->username }}</span> 
-              @if(auth()->user()->role == 3 && auth()->user()->dosen)
-                 <span class="fw-bold text-white">{{ auth()->user()->dosen->nama }}</span>
-              @elseif(auth()->user()->role == 4 && auth()->user()->mahasiswa)
-                <span class="fw-bold text-white">{{ auth()->user()->mahasiswa->nama }}</span>
-              @endif
-            </span>
-          </a>
-          <ul class="dropdown-menu dropdown-user animated fadeIn w-25">
-            <div class="dropdown-user-scroll scrollbar-outer">
-              <li>
-                <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="icon-power mr-4"></i> Logout</a>
-              </li>
-            </div>
-          </ul>
+      <div class="text-dark text-center py-5 px-3 ">
+        <a class="dropdown-item btn py-2 btn-danger" href="{{ route('logout') }}"><i class="icon-power mr-4"></i> Logout</a>
+         
       </div>
+    
       <div class="sidebar-content">
         <ul class="nav nav-secondary text-dark">
             @if (auth()->user()->role == 1)

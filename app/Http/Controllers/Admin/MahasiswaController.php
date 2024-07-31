@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class MahasiswaController extends Controller
 {
@@ -93,6 +95,60 @@ class MahasiswaController extends Controller
             return redirect($this->url)->with('success', 'Berhasil Merubah');
         } else {
             return redirect($this->url)->with('error', 'Gagal Merubah');
+        }
+    }
+
+    public function tambahMhs(Request $request)
+    {
+        // Validasi data input
+        $validated = $request->validate([
+            'nim' => 'required|unique:mahasiswa,nim|max:255',
+            'nama' => 'required|string|max:255',
+            'jk' => 'required|string|max:255',
+        ]);
+    
+        try {
+            // Simpan data mahasiswa baru
+            $mahasiswa = new Mahasiswa();
+            $mahasiswa->nim = $validated['nim'];
+            $mahasiswa->email = $validated['nim'].'@mhs.unwahas.id';
+            $mahasiswa->nama = $validated['nama'];
+            $mahasiswa->jk = $validated['jk'];
+            // Masukkan nilai default atau dummy untuk field yang tidak disertakan dalam form
+            $mahasiswa->no_hp = '0000000000'; // Nilai default atau dummy
+            $mahasiswa->prodi = 'Tidak diketahui'; // Nilai default atau dummy
+            $mahasiswa->tanggal_lahir = '2000-01-01'; // Nilai default atau dummy
+            $mahasiswa->alamat = 'Semarang'; // Nilai default atau dummy
+            $mahasiswa->tempat_lahir = 'Semarang'; // Nilai default atau dummy
+            $mahasiswa->save();
+    
+            // Log untuk penyimpanan mahasiswa baru
+            Log::info('Mahasiswa baru ditambahkan', [
+                'nim' => $mahasiswa->nim,
+                'nama' => $mahasiswa->nama,
+                'jk' => $mahasiswa->jk
+            ]);
+    
+            // Tambahkan entry default di ref_sks dan ref_pembayaran
+            DB::table('ref_sks')->insert([
+                'nim' => $mahasiswa->nim,
+                'jumlah' => 0 // atau nilai default lainnya
+            ]);
+    
+            DB::table('ref_pembayaran')->insert([
+                'nim' => $mahasiswa->nim,
+                'status' => 0 // atau nilai default lainnya
+            ]);
+    
+            return response()->json(['success' => true, 'message' => 'Mahasiswa berhasil ditambahkan']);
+        } catch (\Exception $e) {
+            // Log kesalahan
+            Log::error('Kesalahan saat menambah mahasiswa', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+    
+            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan, coba lagi nanti']);
         }
     }
 }

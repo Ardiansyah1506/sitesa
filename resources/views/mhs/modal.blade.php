@@ -14,7 +14,7 @@
                         <label for="judul">Judul</label>
                         <input type="text" class="form-control" id="judul" name="judul" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hidden">
                         <label for="abstrak">Abstrak</label>
                         <textarea class="form-control" id="abstrak" name="abstrak" required></textarea>
                     </div>

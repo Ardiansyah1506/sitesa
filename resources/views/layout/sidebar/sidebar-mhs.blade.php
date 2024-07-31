@@ -16,3 +16,9 @@
       <p class="text-white">Bimbingan</p>
     </a>
 </li>
+<li class="nav-item @if ($active == 'ta-mhs') active @endif">
+    <a href="{{ route('mhs.ta.waktu') }}">
+      <i class="icon-user-following"></i>
+      <p class="text-white">Sidang TA</p>
+    </a>
+</li>

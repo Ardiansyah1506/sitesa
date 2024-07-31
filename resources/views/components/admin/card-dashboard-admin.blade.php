@@ -1,6 +1,6 @@
 
 <div class="col-sm-6 col-md-3">
-    <div class="card card-stats">
+    <div class="card card-stats {{$backgroundClass}}">
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col-icon">

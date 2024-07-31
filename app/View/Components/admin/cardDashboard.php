@@ -12,14 +12,18 @@ class cardDashboard extends Component
     public $iconColor;
     public $category;
     public $value;
+    public $backgroundClass;
+
     public $moreInfo;
-    public function __construct($icon, $iconColor, $category, $value, $moreInfo)
+    public function __construct($icon, $iconColor, $category, $value, $moreInfo,$backgroundClass)
     {
         $this->icon = $icon;
         $this->iconColor = $iconColor;
         $this->category = $category;
         $this->value = $value;
         $this->moreInfo = $moreInfo;
+        $this->backgroundClass = $backgroundClass;
+
     }
 
     /**

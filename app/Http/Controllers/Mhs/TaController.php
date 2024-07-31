@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Mhs;
 
 use App\Models\TA;
+use App\Models\Tesis;
+use App\Models\SidangTa;
 use App\Models\TanggalTA;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -13,61 +15,56 @@ use Illuminate\Support\Facades\Auth;
 
 class TaController extends Controller
 {
-    private $url = 'prodi/pengajuan/';
+    private $url = 'mahasiwa/pengajuan/';
     private $title = 'Pengajuan TA';
-    private $active = 'pengajuan-prodi';
+    private $active = 'ta-mhs';
 
     public function index(){
+        $nim = Auth::user()->username;
+        $tesis = Tesis::where('nim', $nim)->first();
+    
+        $canSubmitTA = true;
+        $message = '';
+    
+        if (!$tesis) {
+            // Tidak ada data tesis ditemukan
+            $canSubmitTA = false;
+            $message = 'Anda belum mengajukan judul';
+        } elseif ($tesis->status != 1) {
+            // Tesis ada tapi belum di-ACC admin
+            $canSubmitTA = false;
+            $message = 'Judul belum di-ACC admin';
+        }
+    
         $data = [
             'url' => $this->url,
             'title' => $this->title,
-            'active' => $this->active
+            'active' => $this->active,
+            'canSubmitTA' => $canSubmitTA,
+            'message' => $message,
         ];
-
+    
         return view('mhs.waktu-ta.index', $data);
     }
+    
     public function getData()
 {
     // Retrieve data for the logged-in user
-    $data = MahasiswaBimbingan::where('nim', Auth::user()->username)->get();
+    $data = SidangTa::where('nim', Auth::user()->username)->get();
 
     return \DataTables::of($data)
         ->addIndexColumn()
-        ->addColumn('kategori_sidang', function($data) {
-            // Menghitung kategori sidang berdasarkan urutan atau logika tertentu
-            static $kategori_sidang_counter = 0;
-            return ++$kategori_sidang_counter;
-        })
-        ->editColumn('tanggal_sidang', function($data) {
-            // Mengambil kategori sidang saat ini untuk setiap row
-            static $kategori_sidang_counter = 0;
-            $kategori_sidang_counter++;
-            
-            $sidang = TA::where('nim', $data->nim)->where('kode_ta', $kategori_sidang_counter)->first();
-            if ($sidang && $sidang->tanggal != '-') {
-                return Carbon::parse($sidang->tanggal)->translatedFormat('d F Y');
-            }
-            if ($sidang && $sidang->status =='0') {
-                return 'Sidang Belum Dimulai ';
-            }
-            return 'Ajukan Sidang ';
-        })
-        ->editColumn('nama_file', function($data) {
-            static $kategori_sidang_counter = 0;
-            $kategori_sidang_counter++;
+        ->addColumn('nama', function($data) {
 
-            $sidang = TA::where('nim', $data->nim)->where('kode_ta', $kategori_sidang_counter)->first();
-            if ($sidang && $sidang->nama_file) {
-                $fileUrl = url("path/to/files/{$sidang->nama_file}");
-                return '<a href="'.$fileUrl.'">"'.$sidang->nama_file.'"</a>';
-            }
-            return '';
+            $nama = Tesis::where('nim', Auth::user()->username)->select('nama')->get();
+            return $nama;
+        })
+        ->addColumn('Judul', function($data) {
+            $judul = Tesis::where('nim', Auth::user()->username)->select('judul')->get();
+            return $judul;
         })
         ->editColumn('status', function($data) {
-            static $kategori_sidang_counter = 0;
-            $kategori_sidang_counter++;
-
-            $sidang = TA::where('nim', $data->nim)->where('kode_ta', $kategori_sidang_counter)->first();
+            $sidang = SidangTa::where('nim', $data->nim)->first();
             if (!$sidang) {
                 return '<button class="btn btn-warning btn-modal" data-target="#uploadModal" data-id="'.$kategori_sidang_counter.'">Ajukan</button>';
             } else {
@@ -83,49 +80,46 @@ class TaController extends Controller
                 }
             }
         })
-        ->rawColumns(['nama_file', 'status', 'kategori_sidang', 'tanggal_sidang'])
+        ->rawColumns(['status','judul','nama'])
         ->make(true);
 }
 
-    public function createPengajuan(Request $request){
-        try {
-            // Mendapatkan input dari request
-            $kategori_sidang = $request->input('kategori');
-            $nim = Auth::user()->username;
-
-        // Membuat nama file dengan format nim_kategori.ext
-        $file = $request->file('file');
-        $fileName = $nim . '_' . $kategori_sidang . '.' . $file->getClientOriginalExtension();
-        $filePath = $file->storeAs('uploads/ta_' . $kategori_sidang, $fileName, 'public');
+public function createPengajuan(Request $request){
+    try {
+        // Mendapatkan input dari request
+        $kategori_sidang = $request->input('kategori');
+        $nim = Auth::user()->username;
 
         // Menyusun data yang akan disimpan
         $data = [
             'nim' => $nim,
-            'kode_ta' => $kategori_sidang,
-            'nama_file' => $fileName,
-            'tanggal' => '-',
-            'nota_pembimbing' => '-',
+            'kategori_ta' => $kategori_sidang,
+            'nama_file' => '-', // Default or placeholder
+            'tanggal_daftar' => now()->format('Y-m-d'), // Menyimpan hanya tanggal tanpa jam
+            'tanggal_sidang' => null, // Placeholder, diisi nanti
+            'penguji_1' => '-', // Placeholder, diisi nanti
+            'penguji_2' => '-', // Placeholder, diisi nanti
             'status' => 0,
         ];
-            // Membuat pengajuan TA baru
-            TA::create($data);
-    
-            // Logging informasi pengajuan yang berhasil
-            Log::info('Pengajuan TA berhasil diajukan.', [
-                'nim' => $data['nim'],
-                'kategori_sidang' => $data['kode_ta'],
-                'file' => $data['nama_file']
-            ]);
-    
-            return response()->json(['message' => 'Pengajuan TA berhasil diajukan.'], 200);
-        } catch (\Exception $e) {
-            // Logging jika terjadi kesalahan
-            Log::error('Gagal membuat pengajuan TA.', [
-                'error' => $e->getMessage(),
-                'stack_trace' => $e->getTraceAsString()
-            ]);
-    
-            return response()->json(['message' => 'Terjadi kesalahan saat mengajukan TA. Silakan coba lagi.'], 500);
-        }
+
+        // Membuat pengajuan TA baru
+        SidangTa::create($data);
+
+        // Logging informasi pengajuan yang berhasil
+        Log::info('Pengajuan TA berhasil diajukan.', [
+            'nim' => $data['nim'],
+            'kategori_sidang' => $data['kode_ta']
+        ]);
+
+        return response()->json(['message' => 'Pengajuan TA berhasil diajukan.'], 200);
+    } catch (\Exception $e) {
+        // Logging jika terjadi kesalahan
+        Log::error('Gagal membuat pengajuan TA.', [
+            'error' => $e->getMessage(),
+            'stack_trace' => $e->getTraceAsString()
+        ]);
+
+        return response()->json(['message' => 'Terjadi kesalahan saat mengajukan TA. Silakan coba lagi.'], 500);
     }
+}
 }

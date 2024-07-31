@@ -4,13 +4,12 @@
   <div class="row">
     @php
       $cards = [
-        ['icon' => 'fa-users', 'iconColor' => 'success', 'category' => 'Mahasiswa', 'value' => $mhs, 'moreInfo' => route('admin.mahasiswa')],
-        ['icon' => 'fa-user-check', 'iconColor' => 'success', 'category' => 'Progdi', 'value' => $progdi, 'moreInfo' => '#'],
-        ['icon' => 'fa-user-friends', 'iconColor' => 'success', 'category' => 'Dosen Pembimbing', 'value' => $dosbim, 'moreInfo' => '#'],
-        ['icon' => 'fa-book-reader', 'iconColor' => 'success', 'category' => 'Judul', 'value' => $judul,  'moreInfo'=> route('admin.tesis.index')],
-        ['icon' => 'fa-calendar-alt', 'iconColor' => 'success', 'category' => 'Daftar TA', 'value' => $ta, 'moreInfo' => route('admin.ta.index')],
-        ['icon' => 'far fa-list-alt', 'iconColor' => 'success', 'category' => 'Akademik', 'value' => $mhs, 'moreInfo' => '#'],
-        ['icon' => 'fa-user-tie', 'iconColor' => 'success', 'category' => 'Dosen', 'value' => $dosen,  'moreInfo'=> '#'],
+        ['icon' => 'fa-users', 'iconColor' => 'success', 'category' => 'Mahasiswa', 'value' => $mhs, 'moreInfo' => route('admin.mahasiswa'),'backgroundClass'=> ''],
+        ['icon' => 'fa-user-friends', 'iconColor' => 'success', 'category' => 'Dosen Pembimbing', 'value' => $dosbim, 'moreInfo' => '#','backgroundClass'=> 'bg-secondary'],
+        ['icon' => 'fa-book-reader', 'iconColor' => 'success', 'category' => 'Judul', 'value' => $judul,  'moreInfo'=> route('admin.tesis.index'),'backgroundClass'=> 'bg-warning'],
+        ['icon' => 'fa-calendar-alt', 'iconColor' => 'success', 'category' => 'Daftar TA', 'value' => $ta, 'moreInfo' => route('admin.ta.index'),'backgroundClass'=> 'bg-success'],
+        ['icon' => 'far fa-list-alt', 'iconColor' => 'success', 'category' => 'Akademik', 'value' => $mhs, 'moreInfo' => '#','backgroundClass'=> 'bg-info'],
+        ['icon' => 'fa-user-tie', 'iconColor' => 'success', 'category' => 'Dosen', 'value' => $dosen,  'moreInfo'=> '#','backgroundClass'=> 'bg-success'],
       ];
     @endphp 
     @foreach ($cards as $card)
@@ -20,6 +19,7 @@
         :category="$card['category']"
         :value="$card['value']"
         :moreInfo="$card['moreInfo']"
+        :backgroundClass="$card['backgroundClass']"
       />
     @endforeach
   </div>

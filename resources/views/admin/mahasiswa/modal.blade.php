@@ -31,3 +31,38 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal Tambah Mahasiswa -->
+<div class="modal fade" id="modalTambahMhs" tabindex="-1" aria-labelledby="modalTambahMhsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTambahMhsLabel">Tambah Mahasiswa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="formTambahMhs">
+            @csrf
+            <div class="mb-3">
+              <label for="nim" class="form-label">NIM</label>
+              <input type="text" class="form-control" id="nim" name="nim" required>
+            </div>
+            <div class="mb-3">
+              <label for="nama" class="form-label">Nama</label>
+              <input type="text" class="form-control" id="nama" name="nama" required>
+            </div>
+            <div class="mb-3">
+              <label for="jk" class="form-label">Jenis Kelamin</label>
+              <select name="jk" id="jk" class="form-control">
+                  <option value="L">Laki-laki</option>
+                  <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>

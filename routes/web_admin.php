@@ -52,6 +52,7 @@ Route::prefix('admin/')->name('admin.')->group(function() {
     Route::controller(MahasiswaController::class)->group(function() {
         Route::get('/mahasiswa', 'index')->name('mahasiswa');
         Route::get('/mahasiswa/get-data', 'getData')->name('get-data');
+        Route::post('/mahasiswa/store', 'tambahMhs')->name('mahasiswa.store');
         Route::get('/mahasiswa/get-data-detail/{id?}', 'getDataDetail')->name('get-mahasiswa-detail');
         Route::get('/mahasiswa/edit/{id?}', 'edit')->name('edit-mhs');
         Route::put('/mahasiswa/update-mhs', 'updateMhs')->name('update-mhs');

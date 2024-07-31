@@ -8,6 +8,7 @@
       <div class="card">
         <div class="p-4">
           <h4 class="card-title">Daftar Mahasiswa</h4>
+          <button class="btn btn-primary btn-sm tambah-mhs">Tambah Mahasiswa</button>                     
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -40,6 +41,34 @@
 @section('js-custom')
 <script>
     $(document).ready(function () {
+      $('.tambah-mhs').on('click', function () {
+        $('#modalTambahMhs').modal('show');
+    });
+
+    // Form submit menggunakan AJAX
+    $('#formTambahMhs').on('submit', function (e) {
+        e.preventDefault(); // Mencegah default form submission
+
+        $.ajax({
+            url: '{{ route("admin.mahasiswa.store") }}',
+            method: 'POST',
+            data: $(this).serialize(), // Serializes form data
+            success: function (response) {
+                if (response.success) {
+                    alert(response.message); // Tampilkan pesan sukses
+                    $('#modalTambahMhs').modal('hide'); // Tutup modal
+                    $('#formTambahMhs')[0].reset(); // Reset form
+                    $('#dataTables1').DataTable().ajax.reload(); // Reload DataTables
+                } else {
+                    alert(response.message); // Tampilkan pesan error
+                }
+            },
+            error: function (xhr) {
+                alert('Terjadi kesalahan saat menyimpan data');
+                console.log(xhr.responseText); // Untuk debugging
+            }
+        });
+    });
         $("#dataTables1").DataTable({
             processing: true,
             serverSide: true,
