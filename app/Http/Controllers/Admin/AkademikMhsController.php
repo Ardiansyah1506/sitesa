@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Dosen;
 use App\Models\Tesis;
 use App\Models\SidangTa;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
-use App\Models\Dosen;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -82,7 +83,12 @@ class AkademikMhsController extends Controller
         'prodi' => '',
     ];
 
-    return view('admin.akademik.ujian-proposal-tesis', $data);
+
+    // Menggenerate PDF menggunakan view 'dokumen.lembarproposal.index'
+ $pdf = PDF::loadView('admin.akademik.ujian-proposal-tesis', $data);
+    
+ // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
+ return $pdf->download('ujian-proposal-tesis.pdf');
 }
 
     public function notaPembimbing($nim = NULL)
@@ -125,7 +131,11 @@ class AkademikMhsController extends Controller
         'nipPembimbing2' => $nipPembimbing2,
     ];
 
-    return view('admin.akademik.nota-pembimbing', $data);
+    // Menggenerate PDF menggunakan view 'dokumen.lembarproposal.index'
+ $pdf = PDF::loadView('admin.akademik.nota-pembimbing', $data);
+    
+ // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
+ return $pdf->download('nota-pembimbing.pdf');
 }
     public function lembarPengesahan($nim = NULL)
 {
@@ -166,8 +176,11 @@ class AkademikMhsController extends Controller
         'direkturPascaSarjana' => null,
         'nipDirekturPascaSarjana' => null,
     ];
-
-    return view('admin.akademik.lembar-pengesahan-proposal', $data);
+ // Menggenerate PDF menggunakan view 'dokumen.lembarproposal.index'
+ $pdf = PDF::loadView('admin.akademik.lembar-pengesahan-proposal', $data);
+    
+ // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
+ return $pdf->download('lembar-pengesahan-proposal.pdf');
 }
 
 }
