@@ -22,7 +22,7 @@
     <p class="text-white">Tugas Akhir</p>
   </a>
 </li>
-<li class="nav-item @if($active == 'admin-mahasiswa' || $active == 'admin-pengajuan') active @endif">
+<li class="nav-item @if($active == 'admin-mahasiswa' || $active == 'admin-pengajuan' || $active == 'admin-dokumen-mhs') active @endif">
   <a
     data-bs-toggle="collapse"
     href="#dashboard"
@@ -47,10 +47,16 @@
           <p class="text-white">Pengajuan Bimbingan</p>
         </a>
       </li>
+      <li class="nav-item @if($active == 'admin-dokumen-mhs') active @endif">
+        <a href="{{ route('admin.index-akademik-mhs') }}">
+          <i class="icon-arrow-up-circle"></i>
+          <p class="text-white">Akademik Mahasiswa</p>
+        </a>
+      </li>
     </ul>
   </div>
 </li>
-<li class="nav-item @if($active == 'Dosen Pembimbing') active @endif">
+<li class="nav-item @if($active == 'admin-pengajuan-pembimbing' || $active == 'list-dosen') active @endif">
   <a
     data-bs-toggle="collapse"
     href="#dosen"
