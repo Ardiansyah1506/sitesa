@@ -39,7 +39,7 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('ta/get', 'getData')->name('ta.getdata');
         Route::post('ta/updatestatus', 'updateStatus')->name('ta.updatestatus');
         Route::post('ta/updatestatusta', 'updateSelesaiTA')->name('ta.updateSelesaiTa');
-        Route::get('ta/gettanggal', 'getTanggalTa')->name('ta.gettanggal');
+        Route::get('ta/gettanggal/{tanggalDaftar?}', 'getTanggalTa')->name('ta.gettanggal');
     });
 
     Route::controller(PengajuanController::class)->group(function() {
