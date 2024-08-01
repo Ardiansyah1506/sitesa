@@ -97,7 +97,7 @@ class TaController extends Controller
             })
             ->addColumn('aksi', function ($row) {
                 if ($row['status'] == 0) {
-                    return '<button class="btn btn-success acc-button" data-id="' . $row['tesis_id'] . '" data-another-id="' . $row['nim'] . '">Acc</button>';
+                    return '<button class="btn btn-success acc-button" data-id="' . $row['tesis_id'] . '" data-another-id="' . $row['nim'] . '" data-third-id="'.$row['tanggal_daftar'].'">Acc</button>';
                 } else if ($row['status'] == 2) {
                     return '<button class="btn btn-info selesai-button" data-id="' . $row['tesis_id'] . '" data-another-id="' . $row['nim'] . '">Selesai</button>';
                 }
@@ -175,9 +175,12 @@ class TaController extends Controller
         }
     }
 
-    public function getTanggalTa()
+    public function getTanggalTa($tanggalDaftar = NULL)
     {
-        $tanggalTA = TanggalTA::first(); // Assuming there's only one record for date range
+
+        $tanggalTA = TanggalTA::whereDate('tanggal_awal', '>=', $tanggalDaftar)
+                          ->first();
+
         $tanggalAwal = $tanggalTA->tanggal_awal;
         $tanggalAkhir = $tanggalTA->tanggal_akhir;
         $dates = [];

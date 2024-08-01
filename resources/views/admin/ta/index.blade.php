@@ -156,33 +156,35 @@
 
             // Event listener untuk tombol Acc
           // Event listener untuk tombol Acc
-    $(document).on('click', '.acc-button', function() {
-        var idTesis = $(this).data('id');
-        var nim = $(this).data('another-id');
-        // var kode_ta = $(this).data('data-third-id');
-        $('#tesis_id').val(idTesis);
-        $('#mhs_nim').val(nim);
-        // $('#kode_ta').val(kode_ta);
-        // console.log('kode ta', kode_ta)
+          $(document).on('click', '.acc-button', function() {
+                var idTesis = $(this).data('id');
+                var nim = $(this).data('another-id');
+                var tanggalDaftar = $(this).data('third-id');
+                
+                $('#tesis_id').val(idTesis);
+                $('#mhs_nim').val(nim);
+                // $('#kode_ta').val(kode_ta);
+                // console.log('kode ta', kode_ta);
 
-        // Mendapatkan tanggal sidang dari controller
-        $.ajax({
-            url: "{{ route('admin.ta.gettanggal') }}",
-            method: 'GET',
-            success: function(response) {
-                var options = '';
-                response.forEach(function(tanggal) {
-                    options += '<option value="' + tanggal + '">' + tanggal + '</option>';
+                // Mendapatkan tanggal sidang dari controller
+                $.ajax({
+                    url: "{{ route('admin.ta.gettanggal', ['tanggalDaftar' => ':tanggalDaftar']) }}".replace(':tanggalDaftar', tanggalDaftar),
+                    method: 'GET',
+                    success: function(response) {
+                        var options = '';
+                        response.forEach(function(tanggal) {
+                            options += '<option value="' + tanggal + '">' + tanggal + '</option>';
+                        });
+                        $('#tanggal_sidang').html(options);
+                        $('#accModal').modal('show');
+                    },
+                    error: function(response) {
+                        var errorMessage = response.responseJSON ? response.responseJSON.message : 'An error occurred';
+                        alert('Error: ' + errorMessage);
+                    }
                 });
-                $('#tanggal_sidang').html(options);
-                $('#accModal').modal('show');
-            },
-            error: function(response) {
-                var errorMessage = response.responseJSON ? response.responseJSON.message : 'An error occurred';
-                alert('Error: ' + errorMessage);
-            }
-        });
-    });
+            });
+
 
             // Handle form submission untuk update status
             $('#accForm').on('submit', function(e) {

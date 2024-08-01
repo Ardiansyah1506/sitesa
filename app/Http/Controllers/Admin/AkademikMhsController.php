@@ -52,25 +52,39 @@ class AkademikMhsController extends Controller
     
     public function ujianProposal($nim = NULL)
 {
+    // Mengambil data mahasiswa, sidang, tesis, dan bimbingan
     $mhs = Mahasiswa::where('nim', $nim)->first();
     $sidang = SidangTa::where('nim', $nim)->first();
     $tesis = Tesis::where('nim', $nim)->first();
     $bimbingan = Bimbingan::where('nim', $nim)->get();
+
+    // Validasi apakah data ditemukan
+    if (!$mhs || !$sidang || !$tesis) {
+        return view('admin.akademik.kosong');
+    }
+
+    // Mengambil data dosen penguji
     $penguji1 = Dosen::where('nip', $sidang->nip_penguji_1)->first();
     $penguji2 = Dosen::where('nip', $sidang->nip_penguji_2)->first();
 
-    
-    $pembimbing = [];
+    // Validasi apakah data dosen penguji ditemukan
+    if (!$penguji1 || !$penguji2) {
+        return view('admin.akademik.kosong');
+    }
 
+    // Mengambil data pembimbing
+    $pembimbing = [];
     if ($bimbingan->isNotEmpty()) {
         foreach ($bimbingan as $index => $item) {
             $pembimbing["pembimbing" . ($index + 1)] = $item->nama_pembimbing;
         }
     }
 
+    // Set default pembimbing jika tidak ditemukan
     $pemb1 = $pembimbing['pembimbing1'] ?? '';
     $pemb2 = $pembimbing['pembimbing2'] ?? '';
 
+    // Data untuk dikirim ke view
     $data = [
         'nim' => $nim,
         'nama' => $mhs->nama,
@@ -91,16 +105,30 @@ class AkademikMhsController extends Controller
  return $pdf->download('ujian-proposal-tesis.pdf');
 }
 
-    public function notaPembimbing($nim = NULL)
+
+public function notaPembimbing($nim = NULL)
 {
+    // Mengambil data mahasiswa, sidang, tesis, dan bimbingan
     $mhs = Mahasiswa::where('nim', $nim)->first();
     $sidang = SidangTa::where('nim', $nim)->first();
     $tesis = Tesis::where('nim', $nim)->first();
     $bimbingan = Bimbingan::where('nim', $nim)->get();
+
+    // Validasi apakah data ditemukan
+    if (!$mhs || !$sidang || !$tesis) {
+        return view('admin.akademik.kosong');
+    }
+
+    // Mengambil data dosen penguji
     $penguji1 = Dosen::where('nip', $sidang->nip_penguji_1)->first();
     $penguji2 = Dosen::where('nip', $sidang->nip_penguji_2)->first();
 
-    
+    // Validasi apakah data dosen penguji ditemukan
+    if (!$penguji1 || !$penguji2) {
+        return view('admin.akademik.kosong');
+    }
+
+    // Mengambil data pembimbing
     $pembimbing = [];
     $pembimbingNip = [];
 
@@ -111,11 +139,13 @@ class AkademikMhsController extends Controller
         }
     }
 
+    // Set default pembimbing dan nip pembimbing jika tidak ditemukan
     $pemb1 = $pembimbing['pembimbing1'] ?? '';
     $pemb2 = $pembimbing['pembimbing2'] ?? '';
     $nipPembimbing1 = $pembimbingNip['pembimbingNip1'] ?? '';
     $nipPembimbing2 = $pembimbingNip['pembimbingNip2'] ?? '';
 
+    // Data untuk dikirim ke view
     $data = [
         'nim' => $nim,
         'nama' => $mhs->nama,
@@ -137,16 +167,30 @@ class AkademikMhsController extends Controller
  // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
  return $pdf->download('nota-pembimbing.pdf');
 }
-    public function lembarPengesahan($nim = NULL)
+
+public function lembarPengesahan($nim = NULL)
 {
+    // Mengambil data mahasiswa, sidang, tesis, dan bimbingan
     $mhs = Mahasiswa::where('nim', $nim)->first();
     $sidang = SidangTa::where('nim', $nim)->first();
     $tesis = Tesis::where('nim', $nim)->first();
     $bimbingan = Bimbingan::where('nim', $nim)->get();
+
+    // Validasi apakah data ditemukan
+    if (!$mhs || !$sidang || !$tesis) {
+        return view('admin.akademik.kosong');
+    }
+
+    // Mengambil data dosen penguji
     $penguji1 = Dosen::where('nip', $sidang->nip_penguji_1)->first();
     $penguji2 = Dosen::where('nip', $sidang->nip_penguji_2)->first();
 
-    
+    // Validasi apakah data dosen penguji ditemukan
+    if (!$penguji1 || !$penguji2) {
+        return view('admin.akademik.kosong');
+    }
+
+    // Mengambil data pembimbing
     $pembimbing = [];
     $pembimbingNip = [];
 
@@ -157,10 +201,11 @@ class AkademikMhsController extends Controller
         }
     }
 
+    // Set default pembimbing jika tidak ditemukan
     $pemb1 = $pembimbing['pembimbing1'] ?? '';
     $pemb2 = $pembimbing['pembimbing2'] ?? '';
 
-
+    // Data untuk dikirim ke view
     $data = [
         'nim' => $nim,
         'nama' => $mhs->nama,
@@ -172,7 +217,6 @@ class AkademikMhsController extends Controller
         'pembimbing2' => $pemb2,
         'prodi' => null,
         'program' => null,
-        'judul' => $tesis->judul,
         'direkturPascaSarjana' => null,
         'nipDirekturPascaSarjana' => null,
     ];
@@ -182,5 +226,6 @@ class AkademikMhsController extends Controller
  // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
  return $pdf->download('lembar-pengesahan-proposal.pdf');
 }
+
 
 }
