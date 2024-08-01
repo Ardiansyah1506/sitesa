@@ -14,25 +14,15 @@ use Illuminate\Support\Facades\Auth;
 
 class DokumenController extends Controller
 {
-    private $title = 'Nota Pembimbing';
-    private $active = 'pengajuan-prodi';
-
+   
+    private $title = 'Dokumen';
+    private $active = 'Dokumen';
     public function index(){
-        // Mengambil data dari database
-        $tesis = Tesis::where('nim', auth()->user()->username)->first(['judul']);
-        $mahasiswa = Mahasiswa::where('nim', auth()->user()->username)->first(['nim', 'nama', 'prodi']);
-        $dosenPembimbing = MahasiswaBimbingan::where('nim', auth()->user()->username)->first(['nama_pembimbing', 'nip']);
-
-        // Menyiapkan data untuk view
         $data = [
             'title' => $this->title,
-            'active' => $this->active,
-            'tesis' => $tesis,
-            'mahasiswa' => $mahasiswa,
-            'dosenPembimbing' => $dosenPembimbing
+            'active' => $this->active
         ];
-
-        return view('dokumen.nota_pembimbing.index', $data);
+        return view('mhs.akademik.index', $data);
     }
     public function proposal(){
         $data = [
@@ -51,15 +41,16 @@ class DokumenController extends Controller
         return view('dokumen.lembarproposal.index', $data);
     }
 
-    public function lembarProposalPdf($nim)
+    public function lembarProposalPdf()
     {
+        $nim = Auth::user()->username;
         // Mengambil data tesis berdasarkan NIM
         $tesis = Tesis::where('nim', $nim)->select('nim', 'nama', 'judul')->first();
     
         // Mengambil data pembimbing
        if($tesis){
-        $pembimbing1 = MahasiswaBimbingan::where('nim', 'A11.2022.14711')->select('nip')->first();
-        $pembimbing2 = MahasiswaBimbingan::where('nim', 'A11.2022.14711')->select('nip')->orderBy('created_at', 'desc')->first();
+        $pembimbing1 = MahasiswaBimbingan::where('nim', $tesis->nim)->select('nip')->first();
+        $pembimbing2 = MahasiswaBimbingan::where('nim', $tesis->nim)->select('nip')->orderBy('created_at', 'desc')->first();
      // Mengambil nama dosen pembimbing berdasarkan NIP
      $pembimbing1Name = Dosen::where('nip', $pembimbing1->nip)->select('nama')->first();
      $pembimbing2Name = Dosen::where('nip', $pembimbing2->nip)->select('nama')->first();

@@ -23,7 +23,7 @@
     </a>
 </li>
 <li class="nav-item @if ($active == 'Akademik') active @endif">
-    <a href="{{ route('index-surat') }}">
+    <a href="{{ route('mhs.dokumen.index') }}">
       <i class="icon-user-following"></i>
       <p class="text-white">Informasi Akademik</p>
     </a>
