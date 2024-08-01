@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\ManajemenUserController;
 use App\Http\Controllers\Admin\PengajuanController;
 use App\Http\Controllers\Admin\PengajuanTAController;
+use App\Http\Controllers\Admin\AkademikMhsController;
 
 Route::prefix('admin/')->name('admin.')->group(function() {
 
@@ -66,6 +67,15 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('/dosen/getListDosen', 'getListDosen')->name('dosen.getListData');
         Route::post('/dosen/accDosen', 'accDosen')->name('dosen.accDosen');
         // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
+    });
+
+    Route::controller(AkademikMhsController::class)->group(function() {
+        Route::get('/akademik-mhs', 'index')->name('index-akademik-mhs');
+        Route::get('/akademik-mhs/get-data', 'getData')->name('get-data-akademik-mhs');
+        Route::get('/akademik-mhs/detail/{id?}', 'detailAkademikMhs')->name('detail-akademik-mhs');
+        Route::get('/akademik-mhs/ujian-proposal/{nim?}', 'ujianProposal')->name('ujian-proposal');
+        Route::get('/akademik-mhs/nota-pembimbing/{nim?}', 'notaPembimbing')->name('nota-pembimbing');
+        Route::get('/akademik-mhs/lembar-pengesahan/{nim?}', 'lembarPengesahan')->name('lembar-pengesahan');
     });
 
 
