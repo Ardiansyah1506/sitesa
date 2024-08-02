@@ -111,7 +111,7 @@ public function createPengajuan(Request $request){
         // Pastikan file ada sebelum mencoba untuk mendapatkan extension
         if ($file) {
             // Menyusun path penyimpanan
-            $folder = 'public/ta_' . $kategori_sidang;
+            $folder = 'public/ta';
             $filename = $nim . '_ta_' . $kategori_sidang . '.' . $file->getClientOriginalExtension();
 
             // Memastikan direktori penyimpanan ada
@@ -126,7 +126,7 @@ public function createPengajuan(Request $request){
             $data = [
                 'nim' => $nim,
                 'kategori_ta' => $kategori_sidang,
-                'nama_file' => $filename, // Menyimpan nama file yang diunggah
+                'file' => $filename, // Menyimpan nama file yang diunggah
                 'tanggal_daftar' => now()->format('Y-m-d'), // Menyimpan hanya tanggal tanpa jam
                 'tanggal_sidang' => null, // Placeholder, diisi nanti
                 'penguji_1' => '-', // Placeholder, diisi nanti

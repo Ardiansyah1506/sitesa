@@ -44,7 +44,7 @@ class TaController extends Controller
                 'abstrak' => $tesis ? $tesis->abstrak : null,
                 'status' => $ta->status,
                 'ta_id' => $ta->id, // Menyimpan ID TA untuk keperluan aksi
-                'nama_file' => $ta->nama_file, 
+                'file' => $ta->file, 
                 'kode_ta' => $ta->kategori_ta, 
                 'tanggal_daftar' => $ta->tanggal_daftar,
                 'tanggal_sidang' => $ta->tanggal_sidang,
@@ -92,8 +92,8 @@ class TaController extends Controller
                 }
             })
             ->editColumn('nama_file', function ($row) {
-                    $url = url('') . '/ta/' . $row['nama_file'];
-                    return '<a href="' . $url . '" class="btn btn-sm border shadow-sm">Lihat</a>';
+                $url = asset('storage/ta/' . $row['file']);
+                return '<a href="' . $url . '" class="btn btn-sm border shadow-sm">Lihat</a>';
             })
             ->addColumn('aksi', function ($row) {
                 if ($row['status'] == 0) {

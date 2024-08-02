@@ -104,7 +104,47 @@ class DosenPembimbingController extends Controller
             return response()->json(['message' => 'Terjadi kesalahan, silakan coba lagi.'], 500);
         }
     }
-
+    public function edit($nip)
+    {
+        $dosen = Dosen::where('nip', $nip)->firstOrFail();
+        $kuota = RefKuota::where('nip', $nip)->first();
+    
+        return response()->json([
+            'nip' => $dosen->nip,
+            'kuota' => $kuota ? $kuota->sisa_kuota : 0
+        ]);
+    }
+    
+    public function updateKuota(Request $request)
+    {
+        $request->validate([
+            'nip' => 'required|string|max:255',
+            'kuota' => 'required|integer|min:0'
+        ]);
+    
+        $nip = $request->input('nip');
+        $kuotaValue = $request->input('kuota');
+    
+        try {
+            // Update kuota in RefKuota model
+            $kuota = RefKuota::where('nip', $nip)->first();
+            if ($kuota) {
+                $kuota->sisa_kuota = $kuotaValue;
+                $kuota->save();
+            } else {
+                // Create new kuota record if not exists
+                RefKuota::create([
+                    'nip' => $nip,
+                    'sisa_kuota' => $kuotaValue
+                ]);
+            }
+    
+            return response()->json(['success' => 'Kuota berhasil diperbarui']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan, silakan coba lagi.'], 500);
+        }
+    }
+    
 
 }
 

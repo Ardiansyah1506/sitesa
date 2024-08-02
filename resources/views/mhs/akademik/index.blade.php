@@ -38,7 +38,7 @@
   <div class="info-akademik d-flex flex-column gap-3">
     <div class="item d-flex justify-content-between align-items-center">
         <span class="label">Lembar Pengesahan</span>
-        <a href="{{Route('mhs.dokumen.lembarProposal') }}" class="btn btn-download" target="_blank">
+        <a href="{{Route('mhs.lembar-pengesahan') }}" class="btn btn-download" target="_blank">
             Download
         </a>
     </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="item d-flex justify-content-between align-items-center">
         <span class="label">Lembar Nota Pembimbing</span>
-        <a href="{{ asset('storage/dokumen/NOTA PEMBIMBING nur hasan.docx') }}" class="btn btn-download" target="_blank">
+        <a href="{{ route('mhs.nota-pembimbing') }}" class="btn btn-download" target="_blank">
             Download
         </a>
     </div>
@@ -62,7 +62,7 @@
     </div>
     <div class="item d-flex justify-content-between align-items-center">
         <span class="label">Form Ujian Proposal</span>
-        <a href="{{ asset('storage/proposalPAI2023.pdfpdf') }}" class="btn btn-download" target="_blank">
+        <a href="{{ Route('mhs.ujian-proposal') }}" class="btn btn-download" target="_blank">
             Download
         </a>
     </div>

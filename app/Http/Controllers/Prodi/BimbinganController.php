@@ -15,7 +15,7 @@ class BimbinganController extends Controller
     private $title = 'Sedang Bimbingan';
 
     public function index(){
-        $pembimbing = Dosen::where('status', 2)->get();
+        $pembimbing = Dosen::where('status', 1)->get();
         $data = [
             'title' => $this->title,
             'url' =>$this -> url,

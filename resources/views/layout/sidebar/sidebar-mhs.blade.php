@@ -22,8 +22,8 @@
       <p class="text-white">Sidang TA</p>
     </a>
 </li>
-<li class="nav-item @if ($active == 'Akademik') active @endif">
-    <a href="{{ route('mhs.dokumen.index') }}">
+<li class="nav-item @if ($active == 'Dokumen') active @endif">
+    <a href="{{ route('mhs.index-akademik-mhs') }}">
       <i class="icon-user-following"></i>
       <p class="text-white">Informasi Akademik</p>
     </a>

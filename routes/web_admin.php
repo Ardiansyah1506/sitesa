@@ -66,8 +66,9 @@ Route::prefix('admin/')->name('admin.')->group(function() {
         Route::get('/dosen/list', 'listDosen')->name('dosen.listDosen');
         Route::get('/dosen/getListDosen', 'getListDosen')->name('dosen.getListData');
         Route::post('/dosen/accDosen', 'accDosen')->name('dosen.accDosen');
-        // Route::get('/mahasiswa/detail-bimbingan/{id?}', 'detailDosenBimbingan')->name('detail-bimbingan');
-    });
+        Route::get('/dosen/{nip}/edit' ,'edit')->name('dosen.edit');
+        Route::post('/dosen/update-kuota' ,'updateKuota')->name('dosen.updateKuota');   
+     });
 
     Route::controller(AkademikMhsController::class)->group(function() {
         Route::get('/akademik-mhs', 'index')->name('index-akademik-mhs');

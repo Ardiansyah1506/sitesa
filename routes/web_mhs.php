@@ -38,11 +38,11 @@ Route::controller(BimbinganController::class)->group(function() {
         Route::get('/waktu-ta/get-data', 'getData')->name('ta.getData');
         Route::post('/ta/pengajuan', 'createPengajuan')->name('ta.createPengajuan');
     });
-    Route::controller(DokumenController::class)->group(function() {
-        Route::get('/dokumen', 'index')->name('dokumen.index');
-        Route::get('/dokumen/proposal', 'lembarProposalPdf')->name('dokumen.lembarProposal');
+
+    Route::controller(AkademikController::class)->group(function() {
+        Route::get('/akademik-mhs', 'index')->name('index-akademik-mhs');
+        Route::get('/akademik-mhs/ujian-proposal', 'ujianProposal')->name('ujian-proposal');
+        Route::get('/akademik-mhs/nota-pembimbing', 'notaPembimbing')->name('nota-pembimbing');
+        Route::get('/akademik-mhs/lembar-pengesahan', 'lembarPengesahan')->name('lembar-pengesahan');
     });
-    // Route::controller(AkademikController::class)->group(function() {
-    //     Route::get('/dokumen', 'index')->name('dokumen.index');
-    // });
 });

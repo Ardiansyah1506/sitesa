@@ -44,34 +44,34 @@
     <div class="container">
         <h3>LEMBAR PENGESAHAN PROPOSAL TESIS</h3>
         <p>
-            Proposal Tesis dengan judul “<strong>{{ $judul }}</strong>” atas nama {{ $author }} (NIM: {{ $nim }}) mahasiswa Program Studi Magister Pendidikan Agama Islam, telah diujikan pada tanggal:
+            Proposal Tesis dengan judul “<strong>{{ $judul }}</strong>” atas nama {{ $nama }} (NIM: {{ $nim }}) mahasiswa Program nama Magister Pendidikan Agama Islam, telah diujikan pada tanggal:
         </p>
-        <p>{{ $date }}</p>
+        <p>{{ Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('l, d F Y') }}</p>
         <p>Dinyatakan layak sebagai salah satu syarat untuk melakukan penelitian dan penulisan Tesis pada Program Pascasarjana Universitas Wahid Hasyim Semarang.</p>
         <div class="signature-section">
-            <p class="text-end">Semarang, {{ $date }}</p>
+            <p class="text-end">Semarang, {{ Carbon\Carbon::parse($tanggal)->locale('id')->translatedFormat('d F Y') }}</p>
             <table>
                 <tr>
-                    <td class="sign-name">{{ $examiners[0] }}<br>(Ketua/Penguji I)</td>
+                    <td class="sign-name">{{ $penguji1}}<br>(Ketua/Penguji I)</td>
                     <td class="sign-line">(...............................................)</td>
                 </tr>
                 <tr>
-                    <td class="sign-name">{{ $examiners[1] }}<br>(Anggota/Penguji II)</td>
+                    <td class="sign-name">{{ $penguji2 }}<br>(Anggota/Penguji II)</td>
                     <td class="sign-line">(...............................................)</td>
                 </tr>
                 <tr>
-                    <td class="sign-name">{{ $supervisors[0] }}<br>(Dosen Pembimbing I)</td>
+                    <td class="sign-name">{{ $pembimbing1 }}<br>(Dosen Pembimbing I)</td>
                     <td class="sign-line">(...............................................)</td>
                 </tr>
                 <tr>
-                    <td class="sign-name">{{ $supervisors[1] }}<br>(Dosen Pembimbing II)</td>
+                    <td class="sign-name">{{ $pembimbing2 }}<br>(Dosen Pembimbing II)</td>
                     <td class="sign-line">(...............................................)</td>
                 </tr>
             </table>
             <br><br>
             <p class="text-center">Mengesahkan,<br>Direktur Pascasarjana</p>
             <br><br>
-            <p class="text-center">{{ $director }}<br>NPP. 01.99.0.0005</p>
+            <p class="text-center">{{ $direkturPascaSarjana }}<br>NPP. 01.99.0.0005</p>
         </div>
     </div>
 </body>

@@ -29,7 +29,7 @@
                                                 @if($$babVar->status == 1)
                                                     <i class="icon-check"></i>
                                                 @else
-                                                    <a href="{{ asset("bab$i/" . $$babVar->nama_file) }}">
+                                                    <a href="{{ asset("storage/uploads/bab$i/" . $$babVar->nama_file) }}">
                                                         <i class="fas fa-file-alt"></i>
                                                     </a>
                                                 @endif

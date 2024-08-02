@@ -217,11 +217,11 @@ public function lembarPengesahan($nim = NULL)
         'pembimbing2' => $pemb2,
         'prodi' => null,
         'program' => null,
-        'direkturPascaSarjana' => null,
-        'nipDirekturPascaSarjana' => null,
+        'direkturPascaSarjana' => 'Prof. Dr. H. Mahmutarom HR, S.H., M.H.',
+        'nipDirekturPascaSarjana' => '01.99.0.0005',
     ];
  // Menggenerate PDF menggunakan view 'dokumen.lembarproposal.index'
- $pdf = PDF::loadView('admin.akademik.lembar-pengesahan-proposal', $data);
+ $pdf = PDF::loadView('dokumen.lembarproposal.index', $data);
     
  // Mengunduh PDF dengan nama file 'proposal_tesis.pdf'
  return $pdf->download('lembar-pengesahan-proposal.pdf');
