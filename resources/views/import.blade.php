@@ -7,7 +7,7 @@
     <h1>Import Mahasiswa</h1>
 
     @if ($errors->any())
-        <div>
+        <div
             <h3>Errors:</h3>
             <ul>
                 @foreach ($errors as $error)
